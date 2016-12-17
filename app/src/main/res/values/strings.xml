@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">WGU</string>
+    <string name="create_sample_data">Create Sample Data</string>
+    <string name="delete_all_notes">Delete All Terms</string>
+    <string name="are_you_sure">Are you sure?</string>
+    <string name="all_deleted">All terms deleted.</string>
+    <string name="ellipses">…</string>
+    <string name="new_term">New term</string>
+    <string name="term_updated">Term updated.</string>
+    <string name="action_delete">Delete</string>
+    <string name="edit_term">Edit term</string>
+    <string name="term_deleted">Term deleted.</string>
+    <string name="term">Term</string>
+    <string name="enter_a_new_term_title">Enter a new term title</string>
+    <string name="termTitleTextView_text">Title:</string>
+    <string name="termStartDateTextView_text">Start Date:</string>
+    <string name="termEndDateTextView_text">End Date:</string>
+    <string name="term_inserted">Term inserted.</string>
+    <string name="course_list_button_text">Course List</string>
+</resources>

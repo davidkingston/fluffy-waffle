@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.example.wgu.TermActivity">
+
+    <TextView
+        android:id="@+id/termTitleTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/termTitleEditText"
+        android:layout_alignEnd="@+id/termStartTextView"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignRight="@+id/termStartTextView"
+        android:gravity="left|center_vertical"
+        android:text="@string/termTitleTextView_text"
+        android:textSize="18sp" />
+
+    <EditText
+        android:id="@+id/termTitleEditText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/termTitleTextView"
+        android:layout_toRightOf="@+id/termTitleTextView"
+        android:ems="10"
+        android:gravity="top"
+        android:hint="@string/enter_a_new_term_title"
+        android:inputType="textCapWords" />
+
+    <EditText
+        android:id="@+id/termStartEditText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/termTitleEditText"
+        android:layout_toEndOf="@+id/termTitleTextView"
+        android:layout_toRightOf="@+id/termTitleTextView"
+        android:ems="10"
+        android:focusable="false" />
+
+    <EditText
+        android:id="@+id/termEndEditText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/termStartEditText"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignStart="@+id/termStartEditText"
+        android:layout_below="@+id/termStartEditText"
+        android:ems="10"
+        android:focusable="false"/>
+
+    <TextView
+        android:id="@+id/termStartTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/termEndEditText"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/termTitleTextView"
+        android:gravity="left|center_vertical"
+        android:text="@string/termStartDateTextView_text"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/termEndTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/termEndEditText"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/termStartEditText"
+        android:layout_toLeftOf="@+id/termStartEditText"
+        android:layout_toStartOf="@+id/termStartEditText"
+        android:gravity="left|center_vertical"
+        android:text="@string/termEndDateTextView_text"
+        android:textSize="18sp" />
+
+    <Button
+        android:text="@string/course_list_button_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/termEndEditText"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="34dp"
+        android:id="@+id/courseListButton" />
+
+</RelativeLayout>
