@@ -7,18 +7,18 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 
-public class TermProvider extends ContentProvider {
-    public static final String CONTENT_ITEM_TYPE = "Term";
-    private static final String AUTHORITY = "com.example.wgu.termprovider";
-    private static final String BASE_PATH = "term";
-    public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/" + BASE_PATH);
-    private static final int TERMS = 1;
-    private static final int TERM_ID = 2;
+public class CourseProvider extends ContentProvider {
+    public static final String CONTENT_ITEM_TYPE = "Course";
+    private static final String AUTHORITY = "com.example.wgu.courseprovider";
+    private static final String BASE_PATH = "course";
+    public static final Uri COURSE_CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/" + BASE_PATH);
+    private static final int COURSES_BY_TERM_ID = 1;
+    private static final int COURSE_BY_ID = 2;
     private static final UriMatcher uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 
     static {
-        uriMatcher.addURI(AUTHORITY, BASE_PATH, TERMS);
-        uriMatcher.addURI(AUTHORITY, BASE_PATH + "/#", TERM_ID);
+        uriMatcher.addURI(AUTHORITY, BASE_PATH + "/t/#", COURSES_BY_TERM_ID);
+        uriMatcher.addURI(AUTHORITY, BASE_PATH + "/#", COURSE_BY_ID);
     }
 
     private SQLiteDatabase db;
@@ -32,16 +32,18 @@ public class TermProvider extends ContentProvider {
 
     @Override
     public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
-        if (uriMatcher.match(uri) == TERM_ID) {
-            selection = DBHelper.COLUMN_TERM_ID + "=" + uri.getLastPathSegment();
+        if (uriMatcher.match(uri) == COURSE_BY_ID) {
+            selection = DBHelper.COLUMN_COURSE_ID + "=" + uri.getLastPathSegment();
+        } else {
+            selection = DBHelper.COLUMN_COURSE_TERM_ID + "=" + uri.getLastPathSegment();
         }
 
         return db.query(
-                DBHelper.TABLE_TERM,
-                DBHelper.ALL_TERM_COLUMNS,
+                DBHelper.TABLE_COURSE,
+                DBHelper.ALL_COURSE_COLUMNS,
                 selection,
                 null, null, null,
-                DBHelper.COLUMN_TERM_TITLE);
+                DBHelper.COLUMN_COURSE_TITLE);
     }
 
     @Override
@@ -51,17 +53,17 @@ public class TermProvider extends ContentProvider {
 
     @Override
     public Uri insert(Uri uri, ContentValues contentValues) {
-        long id = db.insert(DBHelper.TABLE_TERM, null, contentValues);
+        long id = db.insert(DBHelper.TABLE_COURSE, null, contentValues);
         return Uri.parse(BASE_PATH + "/" + id);
     }
 
     @Override
     public int update(Uri uri, ContentValues contentValues, String selection, String[] selectionArgs) {
-        return db.update(DBHelper.TABLE_TERM, contentValues, selection, selectionArgs);
+        return db.update(DBHelper.TABLE_COURSE, contentValues, selection, selectionArgs);
     }
 
     @Override
     public int delete(Uri uri, String selection, String[] selectionArgs) {
-        return db.delete(DBHelper.TABLE_TERM, selection, selectionArgs);
+        return db.delete(DBHelper.TABLE_COURSE, selection, selectionArgs);
     }
 }

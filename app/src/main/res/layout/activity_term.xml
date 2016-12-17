@@ -47,7 +47,8 @@
         android:layout_toEndOf="@+id/termTitleTextView"
         android:layout_toRightOf="@+id/termTitleTextView"
         android:ems="10"
-        android:focusable="false" />
+        android:focusable="false"
+        android:hint="Enter a start date" />
 
     <EditText
         android:id="@+id/termEndEditText"
@@ -59,7 +60,8 @@
         android:layout_alignStart="@+id/termStartEditText"
         android:layout_below="@+id/termStartEditText"
         android:ems="10"
-        android:focusable="false"/>
+        android:focusable="false"
+        android:hint="Enter an end date" />
 
     <TextView
         android:id="@+id/termStartTextView"
@@ -88,12 +90,13 @@
         android:textSize="18sp" />
 
     <Button
-        android:text="@string/course_list_button_text"
+        android:id="@+id/courseListButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/termEndEditText"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="34dp"
-        android:id="@+id/courseListButton" />
+        android:onClick="openCourseList"
+        android:text="@string/course_list_button_text" />
 
 </RelativeLayout>

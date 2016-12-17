@@ -14,9 +14,9 @@ public class TermModel {
     }
 
     public TermModel(Cursor cursor) {
-        title = cursor.getString(cursor.getColumnIndex(TermDBHelper.COLUMN_NAME_TITLE));
-        startDate = cursor.getString(cursor.getColumnIndex(TermDBHelper.COLUMN_NAME_START));
-        endDate = cursor.getString(cursor.getColumnIndex(TermDBHelper.COLUMN_NAME_END));
+        title = cursor.getString(cursor.getColumnIndex(DBHelper.COLUMN_TERM_TITLE));
+        startDate = cursor.getString(cursor.getColumnIndex(DBHelper.COLUMN_TERM_START));
+        endDate = cursor.getString(cursor.getColumnIndex(DBHelper.COLUMN_TERM_END));
     }
 
     public String getTitle() {

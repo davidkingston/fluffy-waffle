@@ -8,18 +8,19 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
 public class TermActivity extends AppCompatActivity {
 
+    private static final int COURSELIST_EDITOR_REQUEST_CODE = 1001;
     private String action;
     private EditText titleEditText;
     private EditText startDateEditText;
     private EditText endDateEditText;
-
     private String itemFilter;
-
+    private int currentRecordId;
     private TermModel oldTerm;
 
     @Override
@@ -41,9 +42,10 @@ public class TermActivity extends AppCompatActivity {
             action = Intent.ACTION_EDIT;
             setTitle(getString(R.string.edit_term));
 
-            itemFilter = TermDBHelper.COLUMN_NAME_ID + "=" + uri.getLastPathSegment();
+            currentRecordId = Integer.parseInt(uri.getLastPathSegment());
+            itemFilter = DBHelper.COLUMN_TERM_ID + "=" + currentRecordId;
 
-            Cursor cursor = getContentResolver().query(uri, TermDBHelper.ALL_COLUMNS,
+            Cursor cursor = getContentResolver().query(uri, DBHelper.ALL_TERM_COLUMNS,
                     itemFilter, null, null);
             cursor.moveToFirst();
 
@@ -150,11 +152,17 @@ public class TermActivity extends AppCompatActivity {
 
     private ContentValues getContentValuesFromModel(TermModel term) {
         ContentValues values = new ContentValues();
-        values.put(TermDBHelper.COLUMN_NAME_TITLE, term.getTitle());
-        values.put(TermDBHelper.COLUMN_NAME_START, term.getStartDate());
-        values.put(TermDBHelper.COLUMN_NAME_END, term.getEndDate());
+        values.put(DBHelper.COLUMN_TERM_TITLE, term.getTitle());
+        values.put(DBHelper.COLUMN_TERM_START, term.getStartDate());
+        values.put(DBHelper.COLUMN_TERM_END, term.getEndDate());
         return values;
     }
 
 
+    public void openCourseList(View view) {
+        Intent intent = new Intent(TermActivity.this, CourseListActivity.class);
+        Uri uri = Uri.parse(CourseProvider.COURSE_CONTENT_URI + "/t/" + currentRecordId);
+        intent.putExtra(CourseProvider.CONTENT_ITEM_TYPE, uri);
+        startActivityForResult(intent, COURSELIST_EDITOR_REQUEST_CODE);
+    }
 }

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:padding="4dp">
+
+    <ImageView
+        android:id="@+id/imageCourseIcon"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:contentDescription="@string/term"
+        android:src="@drawable/ic_term" />
+
+    <TextView
+        android:id="@+id/courseListTitleTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="4dp"
+        android:layout_marginStart="4dp"
+        android:layout_toEndOf="@+id/imageCourseIcon"
+        android:layout_toRightOf="@+id/imageCourseIcon"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="Dummy Text"
+        android:textColor="@color/primary_text"
+        android:textSize="18sp" />
+
+</RelativeLayout>

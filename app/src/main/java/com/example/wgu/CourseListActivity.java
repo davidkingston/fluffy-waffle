@@ -11,46 +11,48 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.CursorAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity
+public class CourseListActivity extends AppCompatActivity
         implements LoaderManager.LoaderCallbacks<Cursor> {
 
-    private static final int TERM_EDITOR_REQUEST_CODE = 1001;
+    private static final int COURSE_EDITOR_REQUEST_CODE = 1001;
+    String itemFilter;
     private CursorAdapter cursorAdapter;
+    private int termId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_course_list);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.mainActivityToolbar);
-        setSupportActionBar(toolbar);
+        Intent intent = getIntent();
 
-        cursorAdapter = new TermCursorAdapter(this, null, 0);
+        Uri uri = intent.getParcelableExtra(CourseProvider.CONTENT_ITEM_TYPE);
+        termId = Integer.parseInt(uri.getLastPathSegment());
+
+        cursorAdapter = new CourseCursorAdapter(this, null, 0);
 
         ListView list = (ListView) findViewById(android.R.id.list);
         list.setAdapter(cursorAdapter);
 
-        list.setOnItemClickListener(
-                new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        Intent intent = new Intent(MainActivity.this, TermActivity.class);
-                        Uri uri = Uri.parse(TermProvider.CONTENT_URI + "/" + id);
-                        intent.putExtra(TermProvider.CONTENT_ITEM_TYPE, uri);
-                        startActivityForResult(intent, TERM_EDITOR_REQUEST_CODE);
-                    }
-                });
+//        list.setOnItemClickListener(
+//                new AdapterView.OnItemClickListener() {
+//                    @Override
+//                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                        Intent intent = new Intent(MainActivity.this, CourseActivity.class);
+//                        Uri uri = Uri.parse(CourseProvider.CONTENT_URI + "/" + id);
+//                        intent.putExtra(CourseProvider.CONTENT_ITEM_TYPE, uri);
+//                        startActivityForResult(intent, COURSE_EDITOR_REQUEST_CODE);
+//                    }
+//                });
 
         getLoaderManager().initLoader(0, null, this);
     }
@@ -70,24 +72,24 @@ public class MainActivity extends AppCompatActivity
                 insertSampleData();
                 break;
             case R.id.action_delete_all:
-                deleteAllNotes();
+                deleteAllRecords();
                 break;
         }
 
         return super.onOptionsItemSelected(item);
     }
 
-    private void deleteAllNotes() {
+    private void deleteAllRecords() {
 
         DialogInterface.OnClickListener dialogClickListener =
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int button) {
                         if (button == DialogInterface.BUTTON_POSITIVE) {
-                            getContentResolver().delete(TermProvider.CONTENT_URI, null, null);
+                            getContentResolver().delete(CourseProvider.COURSE_CONTENT_URI, itemFilter, null);
                             restartLoader();
 
-                            Toast.makeText(MainActivity.this,
+                            Toast.makeText(CourseListActivity.this,
                                     getString(R.string.all_deleted),
                                     Toast.LENGTH_SHORT).show();
                         }
@@ -102,17 +104,18 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void insertSampleData() {
-        insertTerm("new Term");
-        insertTerm("Multi-line\nTerm");
-        insertTerm("Very long term with a lot of text that exceeds the width of the screen");
+        insertRecord("Course 1");
+        insertRecord("Course 2");
+        insertRecord("Course 3");
         restartLoader();
     }
 
-    private void insertTerm(String termTitle) {
+    private void insertRecord(String title) {
         ContentValues values = new ContentValues();
-        values.put(DBHelper.COLUMN_TERM_TITLE, termTitle);
-        Uri termUri = getContentResolver().insert(TermProvider.CONTENT_URI, values);
-        Log.d("MainActivity", "Inserted term " + termUri.getLastPathSegment());
+        values.put(DBHelper.COLUMN_COURSE_TITLE, title);
+        values.put(DBHelper.COLUMN_COURSE_TERM_ID, termId);
+        Uri uri = getContentResolver().insert(CourseProvider.COURSE_CONTENT_URI, values);
+        Log.d("CourseListActivity", "Inserted course " + uri.getLastPathSegment());
     }
 
     private void restartLoader() {
@@ -121,7 +124,13 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
-        return new CursorLoader(this, TermProvider.CONTENT_URI, null, null, null, null);
+        itemFilter = DBHelper.COLUMN_COURSE_TERM_ID + " = " + termId;
+        Uri uri = CourseProvider.COURSE_CONTENT_URI
+                .buildUpon()
+                .appendPath("t")
+                .appendPath(Integer.toString(termId))
+                .build();
+        return new CursorLoader(this, uri, null, itemFilter, null, null);
     }
 
     @Override
@@ -135,14 +144,15 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void openEditorForNewRecord(View view) {
-        Intent intent = new Intent(this, TermActivity.class);
-        startActivityForResult(intent, TERM_EDITOR_REQUEST_CODE);
+        Toast.makeText(this, "Not implemented!", Toast.LENGTH_SHORT).show();
+//        Intent intent = new Intent(this, CourseActivity.class);
+//        startActivityForResult(intent, COURSE_EDITOR_REQUEST_CODE);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == TERM_EDITOR_REQUEST_CODE && resultCode == RESULT_OK) {
-            restartLoader();
-        }
+//        if (requestCode == COURSE_EDITOR_REQUEST_CODE && resultCode == RESULT_OK) {
+//            restartLoader();
+//        }
     }
 }
