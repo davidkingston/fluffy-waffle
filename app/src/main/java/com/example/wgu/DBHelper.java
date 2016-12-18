@@ -59,6 +59,22 @@ public class DBHelper extends SQLiteOpenHelper {
                     COLUMN_ASSESSMENT_TYPE + " TEXT" +
                     ")";
 
+    public static final String TABLE_MENTOR = "Mentor";
+    public static final String COLUMN_MENTOR_ID = "_id";
+    public static final String COLUMN_MENTOR_COURSE_ID = "CourseId";
+    public static final String COLUMN_MENTOR_NAME = "Name";
+    public static final String COLUMN_MENTOR_EMAIL = "Email";
+    public static final String COLUMN_MENTOR_PHONE = "Phone";
+    public static final String[] ALL_MENTOR_COLUMNS = {COLUMN_MENTOR_ID, COLUMN_MENTOR_COURSE_ID, COLUMN_MENTOR_NAME, COLUMN_MENTOR_EMAIL, COLUMN_MENTOR_PHONE};
+    private static final String CREATE_MENTOR_TABLE =
+            "CREATE TABLE " + TABLE_MENTOR + " (" +
+                    COLUMN_MENTOR_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    COLUMN_MENTOR_COURSE_ID + " INTEGER, " +
+                    COLUMN_MENTOR_NAME + " TEXT, " +
+                    COLUMN_MENTOR_EMAIL + " TEXT, " +
+                    COLUMN_MENTOR_PHONE + " TEXT" +
+                    ")";
+
     public DBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
@@ -68,13 +84,15 @@ public class DBHelper extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL(CREATE_TERM_TABLE);
         sqLiteDatabase.execSQL(CREATE_COURSE_TABLE);
         sqLiteDatabase.execSQL(CREATE_ASSESSMENT_TABLE);
+        sqLiteDatabase.execSQL(CREATE_MENTOR_TABLE);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int oldVersion, int newVersion) {
-        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_TERM);
-        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_COURSE);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_MENTOR);
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_ASSESSMENT);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_COURSE);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_TERM);
         onCreate(sqLiteDatabase);
     }
 }
