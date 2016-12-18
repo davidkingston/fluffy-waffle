@@ -53,6 +53,10 @@
             android:name=".CourseProvider"
             android:authorities="com.example.wgu.courseprovider"
             android:exported="false" />
+        <provider
+            android:name=".AssessmentProvider"
+            android:authorities="com.example.wgu.assessmentprovider"
+            android:exported="false" />
 
     </application>
 
