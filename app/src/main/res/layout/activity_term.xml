@@ -19,28 +19,27 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_alignRight="@+id/termStartTextView"
-        android:gravity="left|center_vertical"
+        android:gravity="end|center_vertical"
         android:text="@string/termTitleTextView_text"
         android:textSize="18sp" />
 
     <EditText
         android:id="@+id/termTitleEditText"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/control_height_48"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:layout_toEndOf="@+id/termTitleTextView"
         android:layout_toRightOf="@+id/termTitleTextView"
         android:ems="10"
-        android:gravity="top"
         android:hint="@string/enter_a_new_term_title"
         android:inputType="textCapWords" />
 
     <EditText
         android:id="@+id/termStartEditText"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/control_height_48"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/termTitleEditText"
@@ -48,12 +47,12 @@
         android:layout_toRightOf="@+id/termTitleTextView"
         android:ems="10"
         android:focusable="false"
-        android:hint="Enter a start date" />
+        android:hint="@string/start_date_hint" />
 
     <EditText
         android:id="@+id/termEndEditText"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/control_height_48"
         android:layout_alignLeft="@+id/termStartEditText"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
@@ -61,7 +60,7 @@
         android:layout_below="@+id/termStartEditText"
         android:ems="10"
         android:focusable="false"
-        android:hint="Enter an end date" />
+        android:hint="@string/end_date_hint" />
 
     <TextView
         android:id="@+id/termStartTextView"
@@ -71,7 +70,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/termTitleTextView"
-        android:gravity="left|center_vertical"
+        android:gravity="end|center_vertical"
         android:text="@string/termStartDateTextView_text"
         android:textSize="18sp" />
 
@@ -85,7 +84,7 @@
         android:layout_below="@+id/termStartEditText"
         android:layout_toLeftOf="@+id/termStartEditText"
         android:layout_toStartOf="@+id/termStartEditText"
-        android:gravity="left|center_vertical"
+        android:gravity="end|center_vertical"
         android:text="@string/termEndDateTextView_text"
         android:textSize="18sp" />
 

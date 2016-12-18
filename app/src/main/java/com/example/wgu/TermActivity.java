@@ -54,9 +54,6 @@ public class TermActivity extends AppCompatActivity {
             populateUIObjects();
 
             titleEditText.requestFocus();
-
-            MyDatePicker.initialize(startDateEditText);
-            MyDatePicker.initialize(endDateEditText);
         }
     }
 
@@ -93,6 +90,9 @@ public class TermActivity extends AppCompatActivity {
         titleEditText = (EditText) findViewById(R.id.termTitleEditText);
         startDateEditText = (EditText) findViewById(R.id.termStartEditText);
         endDateEditText = (EditText) findViewById(R.id.termEndEditText);
+
+        MyDatePicker.initialize(startDateEditText);
+        MyDatePicker.initialize(endDateEditText);
     }
 
     private void populateUIObjects() {
@@ -126,6 +126,7 @@ public class TermActivity extends AppCompatActivity {
                 }
                 break;
         }
+
         finish();
     }
 
@@ -158,11 +159,18 @@ public class TermActivity extends AppCompatActivity {
         return values;
     }
 
-
     public void openCourseList(View view) {
         Intent intent = new Intent(TermActivity.this, CourseListActivity.class);
         Uri uri = Uri.parse(CourseProvider.COURSE_CONTENT_URI + "/t/" + currentRecordId);
         intent.putExtra(CourseProvider.CONTENT_ITEM_TYPE, uri);
         startActivityForResult(intent, COURSELIST_EDITOR_REQUEST_CODE);
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == COURSELIST_EDITOR_REQUEST_CODE && resultCode == RESULT_OK) {
+//            restartLoader();
+        }
+    }
+
 }

@@ -68,8 +68,7 @@ public class CourseModel {
     public boolean isEmpty() {
         return title.length() == 0
                 && startDate.length() == 0
-                && endDate.length() == 0
-                && status.length() == 0;
+                && endDate.length() == 0;
     }
 
     public int getTermId() {

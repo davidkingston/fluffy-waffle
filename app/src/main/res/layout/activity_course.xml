@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.example.wgu.CourseActivity">
+
+    <TextView
+        android:id="@+id/courseTitleTextView"
+        android:layout_width="@dimen/control_width_96"
+        android:layout_height="@dimen/control_height_48"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:gravity="end|center_vertical"
+        android:text="@string/courseTitleTextView_text"
+        android:textSize="18sp" />
+
+    <EditText
+        android:id="@+id/courseTitleEditText"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/control_height_48"
+        android:layout_alignBottom="@+id/courseTitleTextView"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/courseTitleTextView"
+        android:layout_toRightOf="@+id/courseTitleTextView"
+        android:ems="12"
+        android:hint="@string/enter_a_new_course_title"
+        android:inputType="textCapWords" />
+
+    <TextView
+        android:id="@+id/courseStartTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/control_height_48"
+        android:layout_alignEnd="@+id/courseTitleTextView"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignRight="@+id/courseTitleTextView"
+        android:layout_below="@+id/courseTitleTextView"
+        android:gravity="end|center_vertical"
+        android:text="@string/courseStartDateTextView_text"
+        android:textSize="18sp" />
+
+    <EditText
+        android:id="@+id/courseStartEditText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/courseStartTextView"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/courseTitleEditText"
+        android:layout_toEndOf="@+id/courseStartTextView"
+        android:layout_toRightOf="@+id/courseStartTextView"
+        android:ems="10"
+        android:focusable="false"
+        android:hint="@string/start_date_hint" />
+
+    <TextView
+        android:id="@+id/courseEndTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/control_height_48"
+        android:layout_alignEnd="@+id/courseStartTextView"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignRight="@+id/courseStartTextView"
+        android:layout_below="@+id/courseStartTextView"
+        android:gravity="end|center_vertical"
+        android:text="@string/courseEndDateTextView_text"
+        android:textSize="18sp" />
+
+    <EditText
+        android:id="@+id/courseEndEditText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/courseEndTextView"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/courseStartEditText"
+        android:layout_toEndOf="@+id/courseEndTextView"
+        android:layout_toRightOf="@+id/courseEndTextView"
+        android:focusable="false"
+        android:hint="@string/end_date_hint" />
+
+    <TextView
+        android:id="@+id/courseStatusTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/control_height_48"
+        android:layout_alignEnd="@+id/courseEndTextView"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignRight="@+id/courseEndTextView"
+        android:layout_below="@+id/courseEndTextView"
+        android:gravity="end|center_vertical"
+        android:text="@string/courseStatusTextView_Text"
+        android:textSize="18sp" />
+
+    <Spinner
+        android:id="@+id/courseStatusSpinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/courseStatusTextView"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/courseEndEditText"
+        android:layout_toEndOf="@+id/courseStatusTextView"
+        android:layout_toRightOf="@+id/courseStatusTextView" />
+
+    <Button
+        android:id="@+id/assessmentListButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="36dp"
+        android:onClick="openAssessmentList"
+        android:text="@string/assessment_list_button_text" />
+
+</RelativeLayout>

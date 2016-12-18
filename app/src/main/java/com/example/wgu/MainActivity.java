@@ -12,7 +12,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -112,7 +111,6 @@ public class MainActivity extends AppCompatActivity
         ContentValues values = new ContentValues();
         values.put(DBHelper.COLUMN_TERM_TITLE, termTitle);
         Uri termUri = getContentResolver().insert(TermProvider.CONTENT_URI, values);
-        Log.d("MainActivity", "Inserted term " + termUri.getLastPathSegment());
     }
 
     private void restartLoader() {

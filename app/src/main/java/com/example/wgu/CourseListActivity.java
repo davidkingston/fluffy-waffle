@@ -11,10 +11,10 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.CursorAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -38,21 +38,22 @@ public class CourseListActivity extends AppCompatActivity
         Uri uri = intent.getParcelableExtra(CourseProvider.CONTENT_ITEM_TYPE);
         termId = Integer.parseInt(uri.getLastPathSegment());
 
-        cursorAdapter = new CourseCursorAdapter(this, null, 0);
+        cursorAdapter = new TermCursorAdapter(this, null, 0);
 
         ListView list = (ListView) findViewById(android.R.id.list);
         list.setAdapter(cursorAdapter);
 
-//        list.setOnItemClickListener(
-//                new AdapterView.OnItemClickListener() {
-//                    @Override
-//                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                        Intent intent = new Intent(MainActivity.this, CourseActivity.class);
-//                        Uri uri = Uri.parse(CourseProvider.CONTENT_URI + "/" + id);
-//                        intent.putExtra(CourseProvider.CONTENT_ITEM_TYPE, uri);
-//                        startActivityForResult(intent, COURSE_EDITOR_REQUEST_CODE);
-//                    }
-//                });
+        list.setOnItemClickListener(
+                new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        Intent intent = new Intent(CourseListActivity.this, CourseActivity.class);
+                        Uri uri = Uri.parse(CourseProvider.COURSE_CONTENT_URI + "/" + id);
+                        intent.putExtra(CourseProvider.CONTENT_ITEM_TYPE, uri);
+                        intent.putExtra(getString(R.string.parent_id), termId);
+                        startActivityForResult(intent, COURSE_EDITOR_REQUEST_CODE);
+                    }
+                });
 
         getLoaderManager().initLoader(0, null, this);
     }
@@ -68,6 +69,9 @@ public class CourseListActivity extends AppCompatActivity
         int id = item.getItemId();
 
         switch (id) {
+            case android.R.id.home:
+                finishEditing();
+                break;
             case R.id.action_create_sample:
                 insertSampleData();
                 break;
@@ -76,7 +80,7 @@ public class CourseListActivity extends AppCompatActivity
                 break;
         }
 
-        return super.onOptionsItemSelected(item);
+        return true;
     }
 
     private void deleteAllRecords() {
@@ -115,7 +119,6 @@ public class CourseListActivity extends AppCompatActivity
         values.put(DBHelper.COLUMN_COURSE_TITLE, title);
         values.put(DBHelper.COLUMN_COURSE_TERM_ID, termId);
         Uri uri = getContentResolver().insert(CourseProvider.COURSE_CONTENT_URI, values);
-        Log.d("CourseListActivity", "Inserted course " + uri.getLastPathSegment());
     }
 
     private void restartLoader() {
@@ -144,15 +147,25 @@ public class CourseListActivity extends AppCompatActivity
     }
 
     public void openEditorForNewRecord(View view) {
-        Toast.makeText(this, "Not implemented!", Toast.LENGTH_SHORT).show();
-//        Intent intent = new Intent(this, CourseActivity.class);
-//        startActivityForResult(intent, COURSE_EDITOR_REQUEST_CODE);
+        Intent intent = new Intent(this, CourseActivity.class);
+        intent.putExtra(getString(R.string.parent_id), termId);
+        startActivityForResult(intent, COURSE_EDITOR_REQUEST_CODE);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        if (requestCode == COURSE_EDITOR_REQUEST_CODE && resultCode == RESULT_OK) {
-//            restartLoader();
-//        }
+        if (requestCode == COURSE_EDITOR_REQUEST_CODE && resultCode == RESULT_OK) {
+            restartLoader();
+        }
+    }
+
+    private void finishEditing() {
+        setResult(RESULT_OK);
+        finish();
+    }
+
+    @Override
+    public void onBackPressed() {
+        finishEditing();
     }
 }
