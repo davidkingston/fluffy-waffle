@@ -1,9 +1,12 @@
 <resources>
     <string name="app_name">WGU</string>
     <string name="create_sample_data">Create Sample Data</string>
-    <string name="delete_all_notes">Delete All Terms</string>
+    <string name="delete_all_terms">Delete All Terms</string>
     <string name="are_you_sure">Are you sure?</string>
-    <string name="all_deleted">All terms deleted.</string>
+    <string name="all_terms_deleted">All terms deleted.</string>
+    <string name="all_courses_deleted">All courses deleted.</string>
+    <string name="all_assessments_deleted">All assessments deleted.</string>
+    <string name="all_mentors_deleted">All mentors deleted.</string>
     <string name="ellipses">…</string>
     <string name="new_term">New term</string>
     <string name="term_updated">Term updated.</string>
@@ -24,11 +27,16 @@
     <string name="assessment_list_button_text">Assessment List</string>
     <string name="courseStatusTextView_Text">Status:</string>
     <string name="new_course">New Course</string>
-    <string name="edit_course">Edit Course</string>
+    <string name="new_assessment">New Assessment</string>
     <string name="parent_id">parent_id</string>
+    <string name="edit_course">Edit Course</string>
     <string name="course_deleted">Course deleted.</string>
     <string name="course_updated">Course updated.</string>
     <string name="course_inserted">Course inserted.</string>
+    <string name="edit_assessment">Edit Assessment</string>
+    <string name="assessment_deleted">Assessment deleted.</string>
+    <string name="assessment_updated">Assessment updated.</string>
+    <string name="assessment_inserted">Assessment inserted.</string>
     <string name="start_date_hint">Enter a start date</string>
     <string name="end_date_hint">Enter an end date</string>
     <string-array name="course_status">
