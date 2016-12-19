@@ -94,7 +94,7 @@ public class CourseListActivity extends AppCompatActivity
                             restartLoader();
 
                             Toast.makeText(CourseListActivity.this,
-                                    getString(R.string.all_deleted),
+                                    getString(R.string.all_courses_deleted),
                                     Toast.LENGTH_SHORT).show();
                         }
                     }
