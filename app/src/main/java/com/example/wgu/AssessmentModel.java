@@ -57,12 +57,12 @@ public class AssessmentModel {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        AssessmentModel course = (AssessmentModel) obj;
-        return course.getTitle().equals(title)
-                && course.getCourseId() == courseId
-                && course.getDueDate().equals(dueDate)
-                && course.getGoalDate().equals(goalDate)
-                && course.getType().equals(type);
+        AssessmentModel assessment = (AssessmentModel) obj;
+        return assessment.getTitle().equals(title)
+                && assessment.getCourseId() == courseId
+                && assessment.getDueDate().equals(dueDate)
+                && assessment.getGoalDate().equals(goalDate)
+                && assessment.getType().equals(type);
     }
 
     public boolean isEmpty() {
