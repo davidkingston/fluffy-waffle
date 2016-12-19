@@ -33,17 +33,17 @@ public class AssessmentProvider extends ContentProvider {
     @Override
     public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
         if (uriMatcher.match(uri) == ASSESSMENT_BY_ID) {
-            selection = DBHelper.COLUMN_COURSE_ID + "=" + uri.getLastPathSegment();
+            selection = DBHelper.COLUMN_ASSESSMENT_ID + "=" + uri.getLastPathSegment();
         } else {
-            selection = DBHelper.COLUMN_COURSE_TERM_ID + "=" + uri.getLastPathSegment();
+            selection = DBHelper.COLUMN_ASSESSMENT_COURSE_ID + "=" + uri.getLastPathSegment();
         }
 
         return db.query(
-                DBHelper.TABLE_COURSE,
-                DBHelper.ALL_COURSE_COLUMNS,
+                DBHelper.TABLE_ASSESSMENT,
+                DBHelper.ALL_ASSESSMENT_COLUMNS,
                 selection,
                 null, null, null,
-                DBHelper.COLUMN_COURSE_TITLE);
+                DBHelper.COLUMN_ASSESSMENT_TITLE);
     }
 
     @Override
@@ -53,17 +53,17 @@ public class AssessmentProvider extends ContentProvider {
 
     @Override
     public Uri insert(Uri uri, ContentValues contentValues) {
-        long id = db.insert(DBHelper.TABLE_COURSE, null, contentValues);
+        long id = db.insert(DBHelper.TABLE_ASSESSMENT, null, contentValues);
         return Uri.parse(BASE_PATH + "/" + id);
     }
 
     @Override
     public int update(Uri uri, ContentValues contentValues, String selection, String[] selectionArgs) {
-        return db.update(DBHelper.TABLE_COURSE, contentValues, selection, selectionArgs);
+        return db.update(DBHelper.TABLE_ASSESSMENT, contentValues, selection, selectionArgs);
     }
 
     @Override
     public int delete(Uri uri, String selection, String[] selectionArgs) {
-        return db.delete(DBHelper.TABLE_COURSE, selection, selectionArgs);
+        return db.delete(DBHelper.TABLE_ASSESSMENT, selection, selectionArgs);
     }
 }
