@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity
                             restartLoader();
 
                             Toast.makeText(MainActivity.this,
-                                    getString(R.string.all_deleted),
+                                    getString(R.string.all_terms_deleted),
                                     Toast.LENGTH_SHORT).show();
                         }
                     }
@@ -101,9 +101,9 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void insertSampleData() {
-        insertTerm("new Term");
-        insertTerm("Multi-line\nTerm");
-        insertTerm("Very long term with a lot of text that exceeds the width of the screen");
+        insertTerm("Term 1");
+        insertTerm("Term 2");
+        insertTerm("Term 3");
         restartLoader();
     }
 
