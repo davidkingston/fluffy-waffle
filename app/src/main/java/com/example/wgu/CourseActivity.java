@@ -184,9 +184,9 @@ public class CourseActivity extends AppCompatActivity {
 
 
     public void openAssessmentList(View view) {
-//        Intent intent = new Intent(CourseActivity.this, CourseListActivity.class);
-//        Uri uri = Uri.parse(CourseProvider.COURSE_CONTENT_URI + "/t/" + currentRecordId);
-//        intent.putExtra(CourseProvider.CONTENT_ITEM_TYPE, uri);
-//        startActivityForResult(intent, ASSESSMENTLIST_EDITOR_REQUEST_CODE);
+        Intent intent = new Intent(CourseActivity.this, AssessmentListActivity.class);
+        Uri uri = Uri.parse(AssessmentProvider.ASSESSMENT_CONTENT_URI + "/c/" + currentRecordId);
+        intent.putExtra(AssessmentProvider.CONTENT_ITEM_TYPE, uri);
+        startActivityForResult(intent, ASSESSMENTLIST_EDITOR_REQUEST_CODE);
     }
 }
