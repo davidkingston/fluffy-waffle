@@ -111,14 +111,33 @@
         android:layout_toEndOf="@+id/courseStatusTextView"
         android:layout_toRightOf="@+id/courseStatusTextView" />
 
-    <Button
-        android:id="@+id/assessmentListButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="36dp"
-        android:onClick="openAssessmentList"
-        android:text="@string/assessment_list_button_text" />
+        android:layout_height="40dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentStart="true"
+        android:gravity="center_horizontal">
+
+        <Button
+            android:id="@+id/assessmentListButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="openAssessmentList"
+            android:text="@string/assessment_list_button_text" />
+
+        <Button
+            android:id="@+id/mentorListButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="openMentorList"
+            android:text="@string/mentor_list_button_text" />
+
+
+    </LinearLayout>
 
 </RelativeLayout>

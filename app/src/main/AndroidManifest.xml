@@ -60,6 +60,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.wgu.AssessmentListActivity" />
         </activity>
+        <activity
+            android:name=".MentorListActivity"
+            android:label="Mentor List"
+            android:parentActivityName=".CourseActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.wgu.CourseActivity" />
+        </activity>
 
         <provider
             android:name=".TermProvider"

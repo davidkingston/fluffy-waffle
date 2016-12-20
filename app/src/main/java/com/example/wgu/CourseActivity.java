@@ -17,6 +17,7 @@ import android.widget.Toast;
 public class CourseActivity extends AppCompatActivity {
 
     private static final int ASSESSMENTLIST_EDITOR_REQUEST_CODE = 1001;
+    private static final int MENTORLIST_EDITOR_REQUEST_CODE = 1002;
     private String action;
     private EditText titleEditText;
     private EditText startDateEditText;
@@ -188,5 +189,12 @@ public class CourseActivity extends AppCompatActivity {
         Uri uri = Uri.parse(AssessmentProvider.ASSESSMENT_CONTENT_URI + "/c/" + currentRecordId);
         intent.putExtra(AssessmentProvider.CONTENT_ITEM_TYPE, uri);
         startActivityForResult(intent, ASSESSMENTLIST_EDITOR_REQUEST_CODE);
+    }
+
+    public void openMentorList(View view) {
+        Intent intent = new Intent(CourseActivity.this, MentorListActivity.class);
+        Uri uri = Uri.parse(MentorProvider.MENTOR_CONTENT_URI + "/c/" + currentRecordId);
+        intent.putExtra(MentorProvider.CONTENT_ITEM_TYPE, uri);
+        startActivityForResult(intent, MENTORLIST_EDITOR_REQUEST_CODE);
     }
 }

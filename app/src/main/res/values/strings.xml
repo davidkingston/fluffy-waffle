@@ -48,6 +48,7 @@
     <string name="assessment_due_date_hint">Enter a due date</string>
     <string name="assessmentObjectiveRadioButton_text">Objective</string>
     <string name="assessmentPerformanceRadioButton_text">Performance</string>
+    <string name="mentor_list_button_text">Mentor List</string>
     <string-array name="course_status">
         <item>Not Started</item>
         <item>In Progress</item>
