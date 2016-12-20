@@ -116,7 +116,7 @@ public class CourseActivity extends AppCompatActivity {
         startDateEditText.setText(oldCourse.getStartDate());
         endDateEditText.setText(oldCourse.getEndDate());
 
-        if (oldCourse.getStatus() != null && oldCourse.getStatus().length() != 0) {
+        if (oldCourse.getStatus().length() != 0) {
             statusSpinner.setSelection(statusSpinnerAdapter.getPosition(oldCourse.getStatus()));
         }
     }

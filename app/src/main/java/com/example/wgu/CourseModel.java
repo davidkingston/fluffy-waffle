@@ -80,7 +80,7 @@ public class CourseModel {
     }
 
     public String getStatus() {
-        return status;
+        return (status == null) ? "" : status;
     }
 
     public void setStatus(String status) {
