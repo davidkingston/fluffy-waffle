@@ -80,10 +80,10 @@ public class AssessmentModel {
     }
 
     public String getType() {
-        return type;
+        return (type == null) ? "" : type;
     }
 
     public void setType(String type) {
-        this.type = type;
+        this.type = (type == null) ? "" : type;
     }
 }
