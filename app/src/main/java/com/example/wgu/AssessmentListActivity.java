@@ -46,11 +46,11 @@ public class AssessmentListActivity extends AppCompatActivity
                 new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                        Intent intent = new Intent(AssessmentListActivity.this, AssessmentActivity.class);
-//                        Uri uri = Uri.parse(AssessmentProvider.ASSESSMENT_CONTENT_URI + "/" + id);
-//                        intent.putExtra(AssessmentProvider.CONTENT_ITEM_TYPE, uri);
-//                        intent.putExtra(getString(R.string.parent_id), courseId);
-//                        startActivityForResult(intent, ASSESSMENT_EDITOR_REQUEST_CODE);
+                        Intent intent = new Intent(AssessmentListActivity.this, AssessmentActivity.class);
+                        Uri uri = Uri.parse(AssessmentProvider.ASSESSMENT_CONTENT_URI + "/" + id);
+                        intent.putExtra(AssessmentProvider.CONTENT_ITEM_TYPE, uri);
+                        intent.putExtra(getString(R.string.parent_id), courseId);
+                        startActivityForResult(intent, ASSESSMENT_EDITOR_REQUEST_CODE);
                     }
                 });
 
@@ -146,9 +146,9 @@ public class AssessmentListActivity extends AppCompatActivity
     }
 
     public void openEditorForNewRecord(View view) {
-//        Intent intent = new Intent(this, AssessmentActivity.class);
-//        intent.putExtra(getString(R.string.parent_id), courseId);
-//        startActivityForResult(intent, ASSESSMENT_EDITOR_REQUEST_CODE);
+        Intent intent = new Intent(this, AssessmentActivity.class);
+        intent.putExtra(getString(R.string.parent_id), courseId);
+        startActivityForResult(intent, ASSESSMENT_EDITOR_REQUEST_CODE);
     }
 
     @Override

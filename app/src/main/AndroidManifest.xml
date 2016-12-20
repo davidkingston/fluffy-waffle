@@ -52,6 +52,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.wgu.CourseActivity" />
         </activity>
+        <activity
+            android:name=".AssessmentActivity"
+            android:label="Assessment Detail"
+            android:parentActivityName=".AssessmentListActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.wgu.AssessmentListActivity" />
+        </activity>
 
         <provider
             android:name=".TermProvider"

@@ -39,6 +39,15 @@
     <string name="assessment_inserted">Assessment inserted.</string>
     <string name="start_date_hint">Enter a start date</string>
     <string name="end_date_hint">Enter an end date</string>
+    <string name="assessmentTitleTextView_text">Title:</string>
+    <string name="enter_a_new_assessment_title">Enter a new assessment title</string>
+    <string name="assessmentDueDateTextView_text">Due Date:</string>
+    <string name="assessmentGoalDateTextView_text">Goal Date:</string>
+    <string name="assessmentTypeTextView_Text">Type:</string>
+    <string name="assessment_goal_date_hint">Enter a goal date</string>
+    <string name="assessment_due_date_hint">Enter a due date</string>
+    <string name="assessmentObjectiveRadioButton_text">Objective</string>
+    <string name="assessmentPerformanceRadioButton_text">Performance</string>
     <string-array name="course_status">
         <item>Not Started</item>
         <item>In Progress</item>
