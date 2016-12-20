@@ -49,6 +49,17 @@
     <string name="assessmentObjectiveRadioButton_text">Objective</string>
     <string name="assessmentPerformanceRadioButton_text">Performance</string>
     <string name="mentor_list_button_text">Mentor List</string>
+    <string name="mentorNameTextView_text">Name:</string>
+    <string name="enter_a_new_mentor_title">Enter a new mentor name</string>
+    <string name="mentorEmailTextView_text">Email:</string>
+    <string name="mentor_email_hint">Enter an email</string>
+    <string name="mentorPhoneTextView_text">Phone:</string>
+    <string name="mentor_phone_hint">Enter a phone</string>
+    <string name="new_mentor">New Mentor</string>
+    <string name="edit_mentor">Edit Mentor</string>
+    <string name="mentor_deleted">Mentor deleted.</string>
+    <string name="mentor_updated">Mentor updated.</string>
+    <string name="mentor_inserted">Mentor inserted.</string>
     <string-array name="course_status">
         <item>Not Started</item>
         <item>In Progress</item>

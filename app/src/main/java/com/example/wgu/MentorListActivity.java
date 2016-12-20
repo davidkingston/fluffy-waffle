@@ -46,11 +46,11 @@ public class MentorListActivity extends AppCompatActivity
                 new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                        Intent intent = new Intent(MentorListActivity.this, MentorActivity.class);
-//                        Uri uri = Uri.parse(MentorProvider.MENTOR_CONTENT_URI + "/" + id);
-//                        intent.putExtra(MentorProvider.CONTENT_ITEM_TYPE, uri);
-//                        intent.putExtra(getString(R.string.parent_id), courseId);
-//                        startActivityForResult(intent, MENTOR_EDITOR_REQUEST_CODE);
+                        Intent intent = new Intent(MentorListActivity.this, MentorActivity.class);
+                        Uri uri = Uri.parse(MentorProvider.MENTOR_CONTENT_URI + "/" + id);
+                        intent.putExtra(MentorProvider.CONTENT_ITEM_TYPE, uri);
+                        intent.putExtra(getString(R.string.parent_id), courseId);
+                        startActivityForResult(intent, MENTOR_EDITOR_REQUEST_CODE);
                     }
                 });
 
@@ -146,9 +146,9 @@ public class MentorListActivity extends AppCompatActivity
     }
 
     public void openEditorForNewRecord(View view) {
-//        Intent intent = new Intent(this, MentorActivity.class);
-//        intent.putExtra(getString(R.string.parent_id), courseId);
-//        startActivityForResult(intent, MENTOR_EDITOR_REQUEST_CODE);
+        Intent intent = new Intent(this, MentorActivity.class);
+        intent.putExtra(getString(R.string.parent_id), courseId);
+        startActivityForResult(intent, MENTOR_EDITOR_REQUEST_CODE);
     }
 
     @Override
