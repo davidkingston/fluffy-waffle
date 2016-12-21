@@ -131,7 +131,7 @@ public class AssessmentListActivity extends AppCompatActivity
         itemFilter = DBHelper.COLUMN_ASSESSMENT_COURSE_ID + " = " + courseId;
         Uri uri = AssessmentProvider.ASSESSMENT_CONTENT_URI
                 .buildUpon()
-                .appendPath("t")
+                .appendPath("c")
                 .appendPath(Integer.toString(courseId))
                 .build();
         return new CursorLoader(this, uri, null, itemFilter, null, null);
