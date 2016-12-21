@@ -31,14 +31,14 @@ public class CourseListActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_course_list);
+        setContentView(R.layout.course_list_activity);
 
         Intent intent = getIntent();
 
         Uri uri = intent.getParcelableExtra(CourseProvider.CONTENT_ITEM_TYPE);
         termId = Integer.parseInt(uri.getLastPathSegment());
 
-        cursorAdapter = new TermCursorAdapter(this, null, 0);
+        cursorAdapter = new CourseCursorAdapter(this, null, 0);
 
         ListView list = (ListView) findViewById(android.R.id.list);
         list.setAdapter(cursorAdapter);

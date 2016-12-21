@@ -19,26 +19,19 @@ import android.widget.CursorAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
-public class MentorListActivity extends AppCompatActivity
+public class TermListActivity extends AppCompatActivity
         implements LoaderManager.LoaderCallbacks<Cursor> {
 
-    private static final int MENTOR_EDITOR_REQUEST_CODE = 1001;
-    String itemFilter;
+    private static final int TERM_EDITOR_REQUEST_CODE = 1001;
     private CursorAdapter cursorAdapter;
-    private int courseId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.mentor_list_activity);
+        setContentView(R.layout.term_list_activity);
 
-        Intent intent = getIntent();
-
-        Uri uri = intent.getParcelableExtra(MentorProvider.CONTENT_ITEM_TYPE);
-        courseId = Integer.parseInt(uri.getLastPathSegment());
-
-        cursorAdapter = new MentorCursorAdapter(this, null, 0);
+        cursorAdapter = new TermCursorAdapter(this, null, 0);
 
         ListView list = (ListView) findViewById(android.R.id.list);
         list.setAdapter(cursorAdapter);
@@ -47,11 +40,10 @@ public class MentorListActivity extends AppCompatActivity
                 new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        Intent intent = new Intent(MentorListActivity.this, MentorActivity.class);
-                        Uri uri = Uri.parse(MentorProvider.MENTOR_CONTENT_URI + "/" + id);
-                        intent.putExtra(MentorProvider.CONTENT_ITEM_TYPE, uri);
-                        intent.putExtra(getString(R.string.parent_id), courseId);
-                        startActivityForResult(intent, MENTOR_EDITOR_REQUEST_CODE);
+                        Intent intent = new Intent(TermListActivity.this, TermActivity.class);
+                        Uri uri = Uri.parse(TermProvider.CONTENT_URI + "/" + id);
+                        intent.putExtra(TermProvider.CONTENT_ITEM_TYPE, uri);
+                        startActivityForResult(intent, TERM_EDITOR_REQUEST_CODE);
                     }
                 });
 
@@ -69,32 +61,29 @@ public class MentorListActivity extends AppCompatActivity
         int id = item.getItemId();
 
         switch (id) {
-            case android.R.id.home:
-                finishEditing();
-                break;
             case R.id.action_create_sample:
                 insertSampleData();
                 break;
             case R.id.action_delete_all:
-                deleteAllRecords();
+                deleteAllNotes();
                 break;
         }
 
-        return true;
+        return super.onOptionsItemSelected(item);
     }
 
-    private void deleteAllRecords() {
+    private void deleteAllNotes() {
 
         DialogInterface.OnClickListener dialogClickListener =
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int button) {
                         if (button == DialogInterface.BUTTON_POSITIVE) {
-                            getContentResolver().delete(MentorProvider.MENTOR_CONTENT_URI, itemFilter, null);
+                            getContentResolver().delete(TermProvider.CONTENT_URI, null, null);
                             restartLoader();
 
-                            Toast.makeText(MentorListActivity.this,
-                                    getString(R.string.all_mentors_deleted),
+                            Toast.makeText(TermListActivity.this,
+                                    getString(R.string.all_terms_deleted),
                                     Toast.LENGTH_SHORT).show();
                         }
                     }
@@ -108,17 +97,16 @@ public class MentorListActivity extends AppCompatActivity
     }
 
     private void insertSampleData() {
-        insertRecord("Mentor 1");
-        insertRecord("Mentor 2");
-        insertRecord("Mentor 3");
+        insertTerm("Term 1");
+        insertTerm("Term 2");
+        insertTerm("Term 3");
         restartLoader();
     }
 
-    private void insertRecord(String title) {
+    private void insertTerm(String termTitle) {
         ContentValues values = new ContentValues();
-        values.put(DBHelper.COLUMN_MENTOR_NAME, title);
-        values.put(DBHelper.COLUMN_MENTOR_COURSE_ID, courseId);
-        Uri uri = getContentResolver().insert(MentorProvider.MENTOR_CONTENT_URI, values);
+        values.put(DBHelper.COLUMN_TERM_TITLE, termTitle);
+        Uri termUri = getContentResolver().insert(TermProvider.CONTENT_URI, values);
     }
 
     private void restartLoader() {
@@ -127,13 +115,7 @@ public class MentorListActivity extends AppCompatActivity
 
     @Override
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
-        itemFilter = DBHelper.COLUMN_MENTOR_COURSE_ID + " = " + courseId;
-        Uri uri = MentorProvider.MENTOR_CONTENT_URI
-                .buildUpon()
-                .appendPath("c")
-                .appendPath(Integer.toString(courseId))
-                .build();
-        return new CursorLoader(this, uri, null, itemFilter, null, null);
+        return new CursorLoader(this, TermProvider.CONTENT_URI, null, null, null, null);
     }
 
     @Override
@@ -147,25 +129,14 @@ public class MentorListActivity extends AppCompatActivity
     }
 
     public void openEditorForNewRecord(View view) {
-        Intent intent = new Intent(this, MentorActivity.class);
-        intent.putExtra(getString(R.string.parent_id), courseId);
-        startActivityForResult(intent, MENTOR_EDITOR_REQUEST_CODE);
+        Intent intent = new Intent(this, TermActivity.class);
+        startActivityForResult(intent, TERM_EDITOR_REQUEST_CODE);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == MENTOR_EDITOR_REQUEST_CODE && resultCode == RESULT_OK) {
+        if (requestCode == TERM_EDITOR_REQUEST_CODE && resultCode == RESULT_OK) {
             restartLoader();
         }
-    }
-
-    private void finishEditing() {
-        setResult(RESULT_OK);
-        finish();
-    }
-
-    @Override
-    public void onBackPressed() {
-        finishEditing();
     }
 }

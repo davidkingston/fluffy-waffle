@@ -18,7 +18,7 @@
         android:layout_alignParentTop="true"
         android:gravity="end|center_vertical"
         android:text="@string/assessmentTitleTextView_text"
-        android:textSize="18sp" />
+        android:textSize="@dimen/text_size_18" />
 
     <EditText
         android:id="@+id/assessmentTitleEditText"
@@ -30,7 +30,6 @@
         android:layout_alignParentTop="true"
         android:layout_toEndOf="@+id/assessmentTitleTextView"
         android:layout_toRightOf="@+id/assessmentTitleTextView"
-        android:ems="12"
         android:hint="@string/enter_a_new_assessment_title"
         android:inputType="textCapWords" />
 
@@ -45,7 +44,7 @@
         android:layout_below="@+id/assessmentTitleTextView"
         android:gravity="end|center_vertical"
         android:text="@string/assessmentDueDateTextView_text"
-        android:textSize="18sp" />
+        android:textSize="@dimen/text_size_18" />
 
     <EditText
         android:id="@+id/assessmentDueEditText"
@@ -57,7 +56,6 @@
         android:layout_below="@+id/assessmentTitleEditText"
         android:layout_toEndOf="@+id/assessmentDueTextView"
         android:layout_toRightOf="@+id/assessmentDueTextView"
-        android:ems="10"
         android:focusable="false"
         android:hint="@string/assessment_due_date_hint" />
 
@@ -72,7 +70,7 @@
         android:layout_below="@+id/assessmentDueTextView"
         android:gravity="end|center_vertical"
         android:text="@string/assessmentGoalDateTextView_text"
-        android:textSize="18sp" />
+        android:textSize="@dimen/text_size_18" />
 
     <EditText
         android:id="@+id/assessmentGoalEditText"
@@ -98,7 +96,7 @@
         android:layout_below="@+id/assessmentGoalTextView"
         android:gravity="end|center_vertical"
         android:text="@string/assessmentTypeTextView_Text"
-        android:textSize="18sp" />
+        android:textSize="@dimen/text_size_18" />
 
     <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="fill_parent"
@@ -110,14 +108,15 @@
         android:layout_toRightOf="@+id/assessmentTypeTextView"
         android:layout_toEndOf="@+id/assessmentTypeTextView"
         android:layout_alignBottom="@+id/assessmentTypeTextView"
-        android:gravity="center_vertical">
+        android:gravity="center_horizontal"
+        style="?android:attr/buttonBarStyle">
 
         <RadioButton
             android:text="@string/assessmentObjectiveRadioButton_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/assessmentObjectiveRadioButton"
-            android:textSize="18sp" />
+            android:textSize="@dimen/text_size_18" />
 
         <RadioButton
             android:text="@string/assessmentPerformanceRadioButton_text"
@@ -126,7 +125,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginStart="10dp"
             android:id="@+id/assessmentPerformanceRadioButton"
-            android:textSize="18sp" />
+            android:textSize="@dimen/text_size_18" />
 
     </RadioGroup>
 

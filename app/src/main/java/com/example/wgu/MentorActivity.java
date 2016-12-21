@@ -26,7 +26,7 @@ public class MentorActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_mentor);
+        setContentView(R.layout.mentor_activity);
 
         initializeUIObjects();
 

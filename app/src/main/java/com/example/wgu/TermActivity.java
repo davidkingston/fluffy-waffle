@@ -27,7 +27,7 @@ public class TermActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_term);
+        setContentView(R.layout.term_activity);
 
         initializeUIObjects();
 
@@ -164,13 +164,6 @@ public class TermActivity extends AppCompatActivity {
         Uri uri = Uri.parse(CourseProvider.COURSE_CONTENT_URI + "/t/" + currentRecordId);
         intent.putExtra(CourseProvider.CONTENT_ITEM_TYPE, uri);
         startActivityForResult(intent, COURSELIST_EDITOR_REQUEST_CODE);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == COURSELIST_EDITOR_REQUEST_CODE && resultCode == RESULT_OK) {
-//            restartLoader();
-        }
     }
 
 }

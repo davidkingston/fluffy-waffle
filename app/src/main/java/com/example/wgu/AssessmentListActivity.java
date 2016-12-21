@@ -15,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.CursorAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -23,24 +24,25 @@ public class AssessmentListActivity extends AppCompatActivity
 
     private static final int ASSESSMENT_EDITOR_REQUEST_CODE = 1001;
     String itemFilter;
-    private TermCursorAdapter termAdapter;
+    private CursorAdapter cursorAdapter;
     private int courseId;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_assessment_list);
+        setContentView(R.layout.assessment_list_activity);
 
         Intent intent = getIntent();
 
         Uri uri = intent.getParcelableExtra(AssessmentProvider.CONTENT_ITEM_TYPE);
         courseId = Integer.parseInt(uri.getLastPathSegment());
 
-        termAdapter = new TermCursorAdapter(this, null, 0);
+        cursorAdapter = new AssessmentCursorAdapter(this, null, 0);
 
         ListView list = (ListView) findViewById(android.R.id.list);
-        list.setAdapter(termAdapter);
+        list.setAdapter(cursorAdapter);
 
         list.setOnItemClickListener(
                 new AdapterView.OnItemClickListener() {
@@ -137,12 +139,12 @@ public class AssessmentListActivity extends AppCompatActivity
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
-        termAdapter.swapCursor(cursor);
+        cursorAdapter.swapCursor(cursor);
     }
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
-        termAdapter.swapCursor(null);
+        cursorAdapter.swapCursor(null);
     }
 
     public void openEditorForNewRecord(View view) {

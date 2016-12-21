@@ -25,6 +25,6 @@
         android:maxLines="1"
         android:text="Dummy Text"
         android:textColor="@color/primary_text"
-        android:textSize="18sp" />
+        android:textSize="@dimen/text_size_18" />
 
 </RelativeLayout>

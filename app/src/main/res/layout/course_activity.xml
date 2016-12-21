@@ -18,7 +18,7 @@
         android:layout_alignParentTop="true"
         android:gravity="end|center_vertical"
         android:text="@string/courseTitleTextView_text"
-        android:textSize="18sp" />
+        android:textSize="@dimen/text_size_18" />
 
     <EditText
         android:id="@+id/courseTitleEditText"
@@ -30,7 +30,6 @@
         android:layout_alignParentTop="true"
         android:layout_toEndOf="@+id/courseTitleTextView"
         android:layout_toRightOf="@+id/courseTitleTextView"
-        android:ems="12"
         android:hint="@string/enter_a_new_course_title"
         android:inputType="textCapWords" />
 
@@ -45,7 +44,7 @@
         android:layout_below="@+id/courseTitleTextView"
         android:gravity="end|center_vertical"
         android:text="@string/courseStartDateTextView_text"
-        android:textSize="18sp" />
+        android:textSize="@dimen/text_size_18" />
 
     <EditText
         android:id="@+id/courseStartEditText"
@@ -72,7 +71,7 @@
         android:layout_below="@+id/courseStartTextView"
         android:gravity="end|center_vertical"
         android:text="@string/courseEndDateTextView_text"
-        android:textSize="18sp" />
+        android:textSize="@dimen/text_size_18" />
 
     <EditText
         android:id="@+id/courseEndEditText"
@@ -98,7 +97,7 @@
         android:layout_below="@+id/courseEndTextView"
         android:gravity="end|center_vertical"
         android:text="@string/courseStatusTextView_Text"
-        android:textSize="18sp" />
+        android:textSize="@dimen/text_size_18" />
 
     <Spinner
         android:id="@+id/courseStatusSpinner"
@@ -121,21 +120,26 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentStart="true"
-        android:gravity="center_horizontal">
+        android:gravity="center_horizontal"
+        style="?android:attr/buttonBarStyle">
 
         <Button
             android:id="@+id/assessmentListButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="openAssessmentList"
-            android:text="@string/assessment_list_button_text" />
+            android:text="@string/assessment_list_button_text"
+            android:textSize="@dimen/text_size_18"
+            style="?android:attr/buttonBarButtonStyle" />
 
         <Button
             android:id="@+id/mentorListButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="openMentorList"
-            android:text="@string/mentor_list_button_text" />
+            android:text="@string/mentor_list_button_text"
+            android:textSize="@dimen/text_size_18"
+            style="?android:attr/buttonBarButtonStyle" />
 
 
     </LinearLayout>

@@ -18,7 +18,7 @@
         android:layout_alignParentTop="true"
         android:gravity="end|center_vertical"
         android:text="@string/mentorNameTextView_text"
-        android:textSize="18sp" />
+        android:textSize="@dimen/text_size_18" />
 
     <EditText
         android:id="@+id/mentorNameEditText"
@@ -45,7 +45,7 @@
         android:layout_below="@+id/mentorNameTextView"
         android:gravity="end|center_vertical"
         android:text="@string/mentorEmailTextView_text"
-        android:textSize="18sp" />
+        android:textSize="@dimen/text_size_18" />
 
     <EditText
         android:id="@+id/mentorEmailEditText"
@@ -71,7 +71,7 @@
         android:layout_below="@+id/mentorEmailTextView"
         android:gravity="end|center_vertical"
         android:text="@string/mentorPhoneTextView_text"
-        android:textSize="18sp" />
+        android:textSize="@dimen/text_size_18" />
 
     <EditText
         android:id="@+id/mentorPhoneEditText"
