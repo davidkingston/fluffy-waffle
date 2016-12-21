@@ -23,7 +23,7 @@
         android:layout_toRightOf="@+id/imageMentorIcon"
         android:ellipsize="end"
         android:maxLines="1"
-        android:text="Dummy Text"
+        android:text="@string/dummy_text"
         android:textColor="@color/primary_text"
         android:textSize="@dimen/text_size_18" />
 

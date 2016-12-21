@@ -24,88 +24,88 @@
         android:id="@+id/termTitleEditText"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/control_height_48"
+        android:layout_alignBottom="@+id/termTitleTextView"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:layout_toEndOf="@+id/termTitleTextView"
         android:layout_toRightOf="@+id/termTitleTextView"
         android:hint="@string/enter_a_new_term_title"
-        android:inputType="textCapWords"
-        android:layout_alignBottom="@+id/termTitleTextView" />
+        android:inputType="textCapWords" />
 
     <EditText
         android:id="@+id/termStartEditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/termStartTextView"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/termTitleEditText"
         android:layout_toEndOf="@+id/termTitleTextView"
         android:layout_toRightOf="@+id/termTitleTextView"
         android:focusable="false"
-        android:hint="@string/start_date_hint"
-        android:layout_alignBottom="@+id/termStartTextView" />
+        android:hint="@string/start_date_hint" />
 
     <EditText
         android:id="@+id/termEndEditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/termEndTextView"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/termStartEditText"
-        android:focusable="false"
-        android:hint="@string/end_date_hint"
-        android:layout_alignBottom="@+id/termEndTextView"
         android:layout_toEndOf="@+id/termEndTextView"
-        android:layout_toRightOf="@+id/termEndTextView" />
+        android:layout_toRightOf="@+id/termEndTextView"
+        android:focusable="false"
+        android:hint="@string/end_date_hint" />
 
     <TextView
         android:id="@+id/termStartTextView"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/control_height_48"
+        android:layout_alignEnd="@+id/termTitleTextView"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
+        android:layout_alignRight="@+id/termTitleTextView"
         android:layout_below="@+id/termTitleTextView"
         android:gravity="end|center_vertical"
         android:text="@string/termStartDateTextView_text"
-        android:textSize="@dimen/text_size_18"
-        android:layout_alignEnd="@+id/termTitleTextView"
-        android:layout_alignRight="@+id/termTitleTextView" />
+        android:textSize="@dimen/text_size_18" />
 
     <TextView
         android:id="@+id/termEndTextView"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/control_height_48"
+        android:layout_alignEnd="@+id/termStartTextView"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
+        android:layout_alignRight="@+id/termStartTextView"
         android:layout_below="@+id/termStartTextView"
         android:gravity="end|center_vertical"
         android:text="@string/termEndDateTextView_text"
-        android:textSize="@dimen/text_size_18"
-        android:layout_alignEnd="@+id/termStartTextView"
-        android:layout_alignRight="@+id/termStartTextView" />
+        android:textSize="@dimen/text_size_18" />
 
     <LinearLayout
-        android:orientation="horizontal"
+        style="?android:attr/buttonBarStyle"
         android:layout_width="match_parent"
-        android:layout_centerHorizontal="true"
         android:layout_height="40dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentStart="true"
+        android:layout_centerHorizontal="true"
         android:gravity="center_horizontal"
-        style="?android:attr/buttonBarStyle">
+        android:orientation="horizontal">
 
         <Button
             android:id="@+id/courseListButton"
+            style="?android:attr/buttonBarButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="openCourseList"
             android:text="@string/course_list_button_text"
-            android:textSize="@dimen/text_size_18"
-            style="?android:attr/buttonBarButtonStyle" />
+            android:textSize="@dimen/text_size_18" />
 
     </LinearLayout>
 </RelativeLayout>

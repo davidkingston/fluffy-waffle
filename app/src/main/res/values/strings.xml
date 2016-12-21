@@ -61,6 +61,8 @@
     <string name="mentor_updated">Mentor updated.</string>
     <string name="mentor_inserted">Mentor inserted.</string>
     <string name="term_list_button_text">Term List</string>
+    <string name="dummy_text">Dummy Text</string>
+    <string name="welcome_to_the_wgu_student_application">Welcome to the WGU student application.</string>
     <string-array name="course_status">
         <item>Not Started</item>
         <item>In Progress</item>

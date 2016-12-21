@@ -99,32 +99,32 @@
         android:textSize="@dimen/text_size_18" />
 
     <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+        style="?android:attr/buttonBarStyle"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_below="@+id/assessmentGoalEditText"
+        android:layout_alignBottom="@+id/assessmentTypeTextView"
         android:layout_alignParentLeft="false"
         android:layout_alignParentStart="false"
-        android:layout_toRightOf="@+id/assessmentTypeTextView"
+        android:layout_below="@+id/assessmentGoalEditText"
         android:layout_toEndOf="@+id/assessmentTypeTextView"
-        android:layout_alignBottom="@+id/assessmentTypeTextView"
+        android:layout_toRightOf="@+id/assessmentTypeTextView"
         android:gravity="center_horizontal"
-        style="?android:attr/buttonBarStyle">
+        android:orientation="horizontal">
 
         <RadioButton
-            android:text="@string/assessmentObjectiveRadioButton_text"
+            android:id="@+id/assessmentObjectiveRadioButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/assessmentObjectiveRadioButton"
+            android:text="@string/assessmentObjectiveRadioButton_text"
             android:textSize="@dimen/text_size_18" />
 
         <RadioButton
-            android:text="@string/assessmentPerformanceRadioButton_text"
+            android:id="@+id/assessmentPerformanceRadioButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginStart="10dp"
-            android:id="@+id/assessmentPerformanceRadioButton"
+            android:text="@string/assessmentPerformanceRadioButton_text"
             android:textSize="@dimen/text_size_18" />
 
     </RadioGroup>
