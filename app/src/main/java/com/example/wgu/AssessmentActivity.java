@@ -37,11 +37,11 @@ public class AssessmentActivity extends AppCompatActivity {
         Intent intent = getIntent();
 
         Uri uri = intent.getParcelableExtra(AssessmentProvider.CONTENT_ITEM_TYPE);
-        courseId = intent.getIntExtra(getString(R.string.parent_id), 0);
 
         if (uri == null) {
             action = Intent.ACTION_INSERT;
             setTitle(getString(R.string.new_assessment));
+            courseId = intent.getIntExtra(getString(R.string.parent_id), 0);
         } else {
             action = Intent.ACTION_EDIT;
             setTitle(getString(R.string.edit_assessment));
@@ -54,6 +54,7 @@ public class AssessmentActivity extends AppCompatActivity {
             cursor.moveToFirst();
 
             oldAssessment = new AssessmentModel(cursor);
+            courseId = oldAssessment.getCourseId();
 
             populateUIObjects();
 

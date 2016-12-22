@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:padding="4dp">
+
+    <ImageView
+        android:id="@+id/imageMainAssessmentIcon"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:contentDescription="@string/term"
+        android:src="@drawable/ic_term" />
+
+    <TextView
+        android:id="@+id/mainAssessmentListTitleTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="4dp"
+        android:layout_marginStart="4dp"
+        android:layout_toEndOf="@+id/imageMainAssessmentIcon"
+        android:layout_toRightOf="@+id/imageMainAssessmentIcon"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="@string/dummy_text"
+        android:textColor="@color/primary_text"
+        android:textSize="@dimen/text_size_18" />
+
+</RelativeLayout>
