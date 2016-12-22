@@ -32,12 +32,6 @@ public class MentorProvider extends ContentProvider {
 
     @Override
     public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
-        if (uriMatcher.match(uri) == MENTOR_BY_ID) {
-            selection = DBHelper.COLUMN_MENTOR_ID + "=" + uri.getLastPathSegment();
-        } else {
-            selection = DBHelper.COLUMN_MENTOR_COURSE_ID + "=" + uri.getLastPathSegment();
-        }
-
         return db.query(
                 DBHelper.TABLE_MENTOR,
                 DBHelper.ALL_MENTOR_COLUMNS,

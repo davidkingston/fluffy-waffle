@@ -32,12 +32,6 @@ public class CourseProvider extends ContentProvider {
 
     @Override
     public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
-        if (uriMatcher.match(uri) == COURSE_BY_ID) {
-            selection = DBHelper.COLUMN_COURSE_ID + "=" + uri.getLastPathSegment();
-        } else {
-            selection = DBHelper.COLUMN_COURSE_TERM_ID + "=" + uri.getLastPathSegment();
-        }
-
         return db.query(
                 DBHelper.TABLE_COURSE,
                 DBHelper.ALL_COURSE_COLUMNS,

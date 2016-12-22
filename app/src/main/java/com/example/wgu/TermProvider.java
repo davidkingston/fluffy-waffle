@@ -32,10 +32,6 @@ public class TermProvider extends ContentProvider {
 
     @Override
     public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
-        if (uriMatcher.match(uri) == TERM_ID) {
-            selection = DBHelper.COLUMN_TERM_ID + "=" + uri.getLastPathSegment();
-        }
-
         return db.query(
                 DBHelper.TABLE_TERM,
                 DBHelper.ALL_TERM_COLUMNS,
