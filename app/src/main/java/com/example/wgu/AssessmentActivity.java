@@ -142,7 +142,7 @@ public class AssessmentActivity extends AppCompatActivity {
     }
 
     private void deleteItem() {
-        getContentResolver().delete(AssessmentProvider.ASSESSMENT_CONTENT_URI, itemFilter, null);
+        getContentResolver().delete(AssessmentProvider.CONTENT_URI, itemFilter, null);
         Toast.makeText(this, R.string.assessment_deleted, Toast.LENGTH_SHORT).show();
         setResult(RESULT_OK);
         finish();
@@ -150,14 +150,14 @@ public class AssessmentActivity extends AppCompatActivity {
 
     private void updateItem(AssessmentModel assessment) {
         ContentValues values = getContentValuesFromModel(assessment);
-        getContentResolver().update(AssessmentProvider.ASSESSMENT_CONTENT_URI, values, itemFilter, null);
+        getContentResolver().update(AssessmentProvider.CONTENT_URI, values, itemFilter, null);
         Toast.makeText(this, R.string.assessment_updated, Toast.LENGTH_SHORT).show();
         setResult(RESULT_OK);
     }
 
     private void insertItem(AssessmentModel assessment) {
         ContentValues values = getContentValuesFromModel(assessment);
-        getContentResolver().insert(AssessmentProvider.ASSESSMENT_CONTENT_URI, values);
+        getContentResolver().insert(AssessmentProvider.CONTENT_URI, values);
         Toast.makeText(this, R.string.assessment_inserted, Toast.LENGTH_SHORT).show();
         setResult(RESULT_OK);
     }

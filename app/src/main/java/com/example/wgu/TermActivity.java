@@ -161,7 +161,7 @@ public class TermActivity extends AppCompatActivity {
 
     public void openCourseList(View view) {
         Intent intent = new Intent(TermActivity.this, CourseListActivity.class);
-        Uri uri = Uri.parse(CourseProvider.COURSE_CONTENT_URI + "/t/" + currentRecordId);
+        Uri uri = Uri.parse(CourseProvider.CONTENT_URI + "/t/" + currentRecordId);
         intent.putExtra(CourseProvider.CONTENT_ITEM_TYPE, uri);
         startActivityForResult(intent, COURSELIST_EDITOR_REQUEST_CODE);
     }

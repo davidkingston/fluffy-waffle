@@ -48,7 +48,7 @@ public class MentorListActivity extends AppCompatActivity
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         Intent intent = new Intent(MentorListActivity.this, MentorActivity.class);
-                        Uri uri = Uri.parse(MentorProvider.MENTOR_CONTENT_URI + "/" + id);
+                        Uri uri = Uri.parse(MentorProvider.CONTENT_URI + "/" + id);
                         intent.putExtra(MentorProvider.CONTENT_ITEM_TYPE, uri);
                         intent.putExtra(getString(R.string.parent_id), courseId);
                         startActivityForResult(intent, MENTOR_EDITOR_REQUEST_CODE);
@@ -90,7 +90,7 @@ public class MentorListActivity extends AppCompatActivity
                     @Override
                     public void onClick(DialogInterface dialog, int button) {
                         if (button == DialogInterface.BUTTON_POSITIVE) {
-                            getContentResolver().delete(MentorProvider.MENTOR_CONTENT_URI, itemFilter, null);
+                            getContentResolver().delete(MentorProvider.CONTENT_URI, itemFilter, null);
                             restartLoader();
 
                             Toast.makeText(MentorListActivity.this,
@@ -118,7 +118,7 @@ public class MentorListActivity extends AppCompatActivity
         ContentValues values = new ContentValues();
         values.put(DBHelper.COLUMN_MENTOR_NAME, title);
         values.put(DBHelper.COLUMN_MENTOR_COURSE_ID, courseId);
-        Uri uri = getContentResolver().insert(MentorProvider.MENTOR_CONTENT_URI, values);
+        getContentResolver().insert(MentorProvider.CONTENT_URI, values);
     }
 
     private void restartLoader() {
@@ -128,12 +128,7 @@ public class MentorListActivity extends AppCompatActivity
     @Override
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
         itemFilter = DBHelper.COLUMN_MENTOR_COURSE_ID + " = " + courseId;
-        Uri uri = MentorProvider.MENTOR_CONTENT_URI
-                .buildUpon()
-                .appendPath("c")
-                .appendPath(Integer.toString(courseId))
-                .build();
-        return new CursorLoader(this, uri, null, itemFilter, null, null);
+        return new CursorLoader(this, MentorProvider.CONTENT_URI, null, itemFilter, null, null);
     }
 
     @Override

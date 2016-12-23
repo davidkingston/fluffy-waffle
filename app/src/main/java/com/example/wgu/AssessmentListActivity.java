@@ -49,7 +49,7 @@ public class AssessmentListActivity extends AppCompatActivity
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         Intent intent = new Intent(AssessmentListActivity.this, AssessmentActivity.class);
-                        Uri uri = Uri.parse(AssessmentProvider.ASSESSMENT_CONTENT_URI + "/" + id);
+                        Uri uri = Uri.parse(AssessmentProvider.CONTENT_URI + "/" + id);
                         intent.putExtra(AssessmentProvider.CONTENT_ITEM_TYPE, uri);
                         intent.putExtra(getString(R.string.parent_id), courseId);
                         startActivityForResult(intent, ASSESSMENT_EDITOR_REQUEST_CODE);
@@ -91,7 +91,7 @@ public class AssessmentListActivity extends AppCompatActivity
                     @Override
                     public void onClick(DialogInterface dialog, int button) {
                         if (button == DialogInterface.BUTTON_POSITIVE) {
-                            getContentResolver().delete(AssessmentProvider.ASSESSMENT_CONTENT_URI, itemFilter, null);
+                            getContentResolver().delete(AssessmentProvider.CONTENT_URI, itemFilter, null);
                             restartLoader();
 
                             Toast.makeText(AssessmentListActivity.this,
@@ -119,7 +119,7 @@ public class AssessmentListActivity extends AppCompatActivity
         ContentValues values = new ContentValues();
         values.put(DBHelper.COLUMN_ASSESSMENT_TITLE, title);
         values.put(DBHelper.COLUMN_ASSESSMENT_COURSE_ID, courseId);
-        Uri uri = getContentResolver().insert(AssessmentProvider.ASSESSMENT_CONTENT_URI, values);
+        getContentResolver().insert(AssessmentProvider.CONTENT_URI, values);
     }
 
     private void restartLoader() {
@@ -129,12 +129,7 @@ public class AssessmentListActivity extends AppCompatActivity
     @Override
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
         itemFilter = DBHelper.COLUMN_ASSESSMENT_COURSE_ID + " = " + courseId;
-        Uri uri = AssessmentProvider.ASSESSMENT_CONTENT_URI
-                .buildUpon()
-                .appendPath("c")
-                .appendPath(Integer.toString(courseId))
-                .build();
-        return new CursorLoader(this, uri, null, itemFilter, null, null);
+        return new CursorLoader(this, AssessmentProvider.CONTENT_URI, null, itemFilter, null, null);
     }
 
     @Override

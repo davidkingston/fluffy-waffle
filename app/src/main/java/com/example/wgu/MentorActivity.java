@@ -128,7 +128,7 @@ public class MentorActivity extends AppCompatActivity {
     }
 
     private void deleteItem() {
-        getContentResolver().delete(MentorProvider.MENTOR_CONTENT_URI, itemFilter, null);
+        getContentResolver().delete(MentorProvider.CONTENT_URI, itemFilter, null);
         Toast.makeText(this, R.string.mentor_deleted, Toast.LENGTH_SHORT).show();
         setResult(RESULT_OK);
         finish();
@@ -136,14 +136,14 @@ public class MentorActivity extends AppCompatActivity {
 
     private void updateItem(MentorModel mentor) {
         ContentValues values = getContentValuesFromModel(mentor);
-        getContentResolver().update(MentorProvider.MENTOR_CONTENT_URI, values, itemFilter, null);
+        getContentResolver().update(MentorProvider.CONTENT_URI, values, itemFilter, null);
         Toast.makeText(this, R.string.mentor_updated, Toast.LENGTH_SHORT).show();
         setResult(RESULT_OK);
     }
 
     private void insertItem(MentorModel mentor) {
         ContentValues values = getContentValuesFromModel(mentor);
-        getContentResolver().insert(MentorProvider.MENTOR_CONTENT_URI, values);
+        getContentResolver().insert(MentorProvider.CONTENT_URI, values);
         Toast.makeText(this, R.string.mentor_inserted, Toast.LENGTH_SHORT).show();
         setResult(RESULT_OK);
     }

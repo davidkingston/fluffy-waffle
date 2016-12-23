@@ -11,7 +11,7 @@ public class AssessmentProvider extends ContentProvider {
     public static final String CONTENT_ITEM_TYPE = "Assessment";
     private static final String AUTHORITY = "com.example.wgu.assessmentprovider";
     private static final String BASE_PATH = "assessment";
-    public static final Uri ASSESSMENT_CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/" + BASE_PATH);
+    public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/" + BASE_PATH);
     private static final int ASSESSMENTS_BY_COURSE_ID = 1;
     private static final int ASSESSMENT_BY_ID = 2;
     private static final int ASSESSMENTS_BY_DATE = 3;

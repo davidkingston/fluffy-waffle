@@ -97,16 +97,16 @@ public class TermListActivity extends AppCompatActivity
     }
 
     private void insertSampleData() {
-        insertTerm("Term 1");
-        insertTerm("Term 2");
-        insertTerm("Term 3");
+        insertRecord("Term 1");
+        insertRecord("Term 2");
+        insertRecord("Term 3");
         restartLoader();
     }
 
-    private void insertTerm(String termTitle) {
+    private void insertRecord(String termTitle) {
         ContentValues values = new ContentValues();
         values.put(DBHelper.COLUMN_TERM_TITLE, termTitle);
-        Uri termUri = getContentResolver().insert(TermProvider.CONTENT_URI, values);
+        getContentResolver().insert(TermProvider.CONTENT_URI, values);
     }
 
     private void restartLoader() {

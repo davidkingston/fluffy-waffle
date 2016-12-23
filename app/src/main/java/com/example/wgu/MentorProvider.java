@@ -11,7 +11,7 @@ public class MentorProvider extends ContentProvider {
     public static final String CONTENT_ITEM_TYPE = "Mentor";
     private static final String AUTHORITY = "com.example.wgu.mentorprovider";
     private static final String BASE_PATH = "asessment";
-    public static final Uri MENTOR_CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/" + BASE_PATH);
+    public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/" + BASE_PATH);
     private static final int MENTORS_BY_COURSE_ID = 1;
     private static final int MENTOR_BY_ID = 2;
     private static final UriMatcher uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);

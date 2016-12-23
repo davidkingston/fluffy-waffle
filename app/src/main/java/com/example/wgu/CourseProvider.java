@@ -11,7 +11,7 @@ public class CourseProvider extends ContentProvider {
     public static final String CONTENT_ITEM_TYPE = "Course";
     private static final String AUTHORITY = "com.example.wgu.courseprovider";
     private static final String BASE_PATH = "course";
-    public static final Uri COURSE_CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/" + BASE_PATH);
+    public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/" + BASE_PATH);
     private static final int COURSES_BY_TERM_ID = 1;
     private static final int COURSE_BY_ID = 2;
     private static final UriMatcher uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);

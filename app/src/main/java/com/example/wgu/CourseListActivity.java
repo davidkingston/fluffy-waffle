@@ -48,7 +48,7 @@ public class CourseListActivity extends AppCompatActivity
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         Intent intent = new Intent(CourseListActivity.this, CourseActivity.class);
-                        Uri uri = Uri.parse(CourseProvider.COURSE_CONTENT_URI + "/" + id);
+                        Uri uri = Uri.parse(CourseProvider.CONTENT_URI + "/" + id);
                         intent.putExtra(CourseProvider.CONTENT_ITEM_TYPE, uri);
                         intent.putExtra(getString(R.string.parent_id), termId);
                         startActivityForResult(intent, COURSE_EDITOR_REQUEST_CODE);
@@ -90,7 +90,7 @@ public class CourseListActivity extends AppCompatActivity
                     @Override
                     public void onClick(DialogInterface dialog, int button) {
                         if (button == DialogInterface.BUTTON_POSITIVE) {
-                            getContentResolver().delete(CourseProvider.COURSE_CONTENT_URI, itemFilter, null);
+                            getContentResolver().delete(CourseProvider.CONTENT_URI, itemFilter, null);
                             restartLoader();
 
                             Toast.makeText(CourseListActivity.this,
@@ -118,7 +118,7 @@ public class CourseListActivity extends AppCompatActivity
         ContentValues values = new ContentValues();
         values.put(DBHelper.COLUMN_COURSE_TITLE, title);
         values.put(DBHelper.COLUMN_COURSE_TERM_ID, termId);
-        Uri uri = getContentResolver().insert(CourseProvider.COURSE_CONTENT_URI, values);
+        getContentResolver().insert(CourseProvider.CONTENT_URI, values);
     }
 
     private void restartLoader() {
@@ -128,12 +128,7 @@ public class CourseListActivity extends AppCompatActivity
     @Override
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
         itemFilter = DBHelper.COLUMN_COURSE_TERM_ID + " = " + termId;
-        Uri uri = CourseProvider.COURSE_CONTENT_URI
-                .buildUpon()
-                .appendPath("t")
-                .appendPath(Integer.toString(termId))
-                .build();
-        return new CursorLoader(this, uri, null, itemFilter, null, null);
+        return new CursorLoader(this, CourseProvider.CONTENT_URI, null, itemFilter, null, null);
     }
 
     @Override

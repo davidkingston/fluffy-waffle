@@ -9,7 +9,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
@@ -38,7 +37,7 @@ public class MainActivity extends AppCompatActivity
 
         cursorAdapter = new MainCursorAdapter(this, null, 0);
 
-        ListView list = (ListView) findViewById(android.R.id.list);
+        ListView list = (ListView) findViewById(R.id.mainAssessmentsListView);
         list.setAdapter(cursorAdapter);
 
         list.setOnItemClickListener(
@@ -46,17 +45,13 @@ public class MainActivity extends AppCompatActivity
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         Intent intent = new Intent(MainActivity.this, AssessmentActivity.class);
-                        Uri uri = Uri.parse(AssessmentProvider.ASSESSMENT_CONTENT_URI + "/" + id);
+                        Uri uri = Uri.parse(AssessmentProvider.CONTENT_URI + "/" + id);
                         intent.putExtra(AssessmentProvider.CONTENT_ITEM_TYPE, uri);
                         startActivityForResult(intent, ASSESSMENT_EDITOR_REQUEST_CODE);
                     }
                 });
 
-        Log.d("MainActivity", "onCreate1");
-        Loader<Cursor> qqq = getLoaderManager().initLoader(0, null, this);
-        Log.d("MainActivity", "onCreate2");
-        Log.d("MainActivity", "count = " + Integer.toString(list.getAdapter().getCount()));
-
+        getLoaderManager().initLoader(0, null, this);
     }
 
     public void openTermList(View view) {
@@ -69,12 +64,7 @@ public class MainActivity extends AppCompatActivity
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
         String nowString = new SimpleDateFormat("MM/dd/yyyy").format(new Date());
         itemFilter = DBHelper.COLUMN_ASSESSMENT_GOAL + " = '" + nowString + "'";
-        Uri uri = AssessmentProvider.ASSESSMENT_CONTENT_URI
-                .buildUpon()
-                .appendPath("d")
-                .appendPath(nowString)
-                .build();
-        return new CursorLoader(this, uri, null, itemFilter, null, null);
+        return new CursorLoader(this, AssessmentProvider.CONTENT_URI, null, itemFilter, null, null);
     }
 
     @Override

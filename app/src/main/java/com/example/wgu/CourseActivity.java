@@ -153,7 +153,7 @@ public class CourseActivity extends AppCompatActivity {
     }
 
     private void deleteItem() {
-        getContentResolver().delete(CourseProvider.COURSE_CONTENT_URI, itemFilter, null);
+        getContentResolver().delete(CourseProvider.CONTENT_URI, itemFilter, null);
         Toast.makeText(this, R.string.course_deleted, Toast.LENGTH_SHORT).show();
         setResult(RESULT_OK);
         finish();
@@ -161,14 +161,14 @@ public class CourseActivity extends AppCompatActivity {
 
     private void updateItem(CourseModel course) {
         ContentValues values = getContentValuesFromModel(course);
-        getContentResolver().update(CourseProvider.COURSE_CONTENT_URI, values, itemFilter, null);
+        getContentResolver().update(CourseProvider.CONTENT_URI, values, itemFilter, null);
         Toast.makeText(this, R.string.course_updated, Toast.LENGTH_SHORT).show();
         setResult(RESULT_OK);
     }
 
     private void insertItem(CourseModel course) {
         ContentValues values = getContentValuesFromModel(course);
-        getContentResolver().insert(CourseProvider.COURSE_CONTENT_URI, values);
+        getContentResolver().insert(CourseProvider.CONTENT_URI, values);
         Toast.makeText(this, R.string.course_inserted, Toast.LENGTH_SHORT).show();
         setResult(RESULT_OK);
     }
@@ -186,14 +186,14 @@ public class CourseActivity extends AppCompatActivity {
 
     public void openAssessmentList(View view) {
         Intent intent = new Intent(CourseActivity.this, AssessmentListActivity.class);
-        Uri uri = Uri.parse(AssessmentProvider.ASSESSMENT_CONTENT_URI + "/c/" + currentRecordId);
+        Uri uri = Uri.parse(AssessmentProvider.CONTENT_URI + "/c/" + currentRecordId);
         intent.putExtra(AssessmentProvider.CONTENT_ITEM_TYPE, uri);
         startActivityForResult(intent, ASSESSMENTLIST_EDITOR_REQUEST_CODE);
     }
 
     public void openMentorList(View view) {
         Intent intent = new Intent(CourseActivity.this, MentorListActivity.class);
-        Uri uri = Uri.parse(MentorProvider.MENTOR_CONTENT_URI + "/c/" + currentRecordId);
+        Uri uri = Uri.parse(MentorProvider.CONTENT_URI + "/c/" + currentRecordId);
         intent.putExtra(MentorProvider.CONTENT_ITEM_TYPE, uri);
         startActivityForResult(intent, MENTORLIST_EDITOR_REQUEST_CODE);
     }
