@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">WGU</string>
     <string name="create_sample_data">Create Sample Data</string>
-    <string name="delete_all_terms">Delete All Terms</string>
+    <string name="delete_all_data">Delete All Sample Data</string>
     <string name="are_you_sure">Are you sure?</string>
     <string name="all_terms_deleted">All terms deleted.</string>
     <string name="all_courses_deleted">All courses deleted.</string>
