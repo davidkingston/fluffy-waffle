@@ -22,7 +22,6 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="24dp"
         android:gravity="center_vertical|center_horizontal"
         android:text="@string/welcome_to_the_wgu_student_portal"
         android:textSize="30sp" />
@@ -36,21 +35,65 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentStart="true"
         android:layout_below="@id/mainWelcomeTextView"
-        android:text="@string/no_assessments_due"
-        android:textSize="@dimen/text_size_18"
-        android:layout_marginTop="24dp"
-        android:gravity="start" />
+        android:gravity="start"
+        android:text="@string/dummy_text"
+        android:textSize="@dimen/text_size_18" />
 
     <ListView
         android:id="@+id/mainAssessmentsListView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="@dimen/main_list_height"
         android:layout_alignParentEnd="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/mainAssessmentsDueTextView"
-        android:layout_marginBottom="56dp" />
+        android:layout_below="@+id/mainAssessmentsDueTextView" />
+
+    <TextView
+        android:id="@+id/mainCoursesStartingTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@id/mainAssessmentsListView"
+        android:gravity="start"
+        android:text="@string/dummy_text"
+        android:textSize="@dimen/text_size_18" />
+
+    <ListView
+        android:id="@+id/mainCoursesStartingListView"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/main_list_height"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/mainCoursesStartingTextView" />
+
+    <TextView
+        android:id="@+id/mainCoursesEndingTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@id/mainCoursesStartingListView"
+        android:gravity="start"
+        android:text="@string/dummy_text"
+        android:textSize="@dimen/text_size_18" />
+
+    <ListView
+        android:id="@+id/mainCoursesEndingListView"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/main_list_height"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/mainCoursesEndingTextView" />
 
     <LinearLayout
         style="?android:attr/buttonBarStyle"

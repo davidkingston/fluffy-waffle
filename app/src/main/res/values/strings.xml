@@ -87,4 +87,12 @@
         <item quantity="one">%d assessment due.</item>
         <item quantity="other">%d assessments due.</item>
     </plurals>
+    <plurals name="numberOfCoursesStarting">
+        <item quantity="one">%d course starting.</item>
+        <item quantity="other">%d courses starting.</item>
+    </plurals>
+    <plurals name="numberOfCoursesEnding">
+        <item quantity="one">%d course ending.</item>
+        <item quantity="other">%d courses ending.</item>
+    </plurals>
 </resources>

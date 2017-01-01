@@ -30,7 +30,13 @@ public class MainActivity extends AppCompatActivity
 
     private static final int TERMLIST_EDITOR_REQUEST_CODE = 1001;
     private static final int ASSESSMENT_EDITOR_REQUEST_CODE = 1002;
-    private CursorAdapter cursorAdapter;
+    private static final int COURSESTART_EDITOR_REQUEST_CODE = 1003;
+    private static final int COURSEEND_EDITOR_REQUEST_CODE = 1004;
+
+    private CursorAdapter assessmentCursorAdapter;
+    private CursorAdapter coursesStartingCursorAdapter;
+    private CursorAdapter coursesEndingCursorAdapter;
+
     private int toDoWindowId = 0;
     private int temporaryToDoWindowId = 0;
 
@@ -46,24 +52,10 @@ public class MainActivity extends AppCompatActivity
         SharedPreferences settings = getSharedPreferences("settings", 0);
         toDoWindowId = settings.getInt(getString(R.string.to_do_window_id), 0);
 
-        // initialize the Assessments list
-        cursorAdapter = new MainCursorAdapter(this, null, 0);
 
-        ListView list = (ListView) findViewById(R.id.mainAssessmentsListView);
-        list.setAdapter(cursorAdapter);
-
-        list.setOnItemClickListener(
-                new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        Intent intent = new Intent(MainActivity.this, AssessmentActivity.class);
-                        Uri uri = Uri.parse(AssessmentProvider.CONTENT_URI + "/" + id);
-                        intent.putExtra(AssessmentProvider.CONTENT_ITEM_TYPE, uri);
-                        startActivityForResult(intent, ASSESSMENT_EDITOR_REQUEST_CODE);
-                    }
-                });
-
-        getLoaderManager().initLoader(0, null, this);
+        initializeAssessmentList();
+        initializeCourseStartingList();
+        initializeCourseEndingList();
     }
 
     @Override
@@ -87,6 +79,7 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
+        // set up the from and to dates
         SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
 
         Date fromDate = new Date();
@@ -97,21 +90,68 @@ public class MainActivity extends AppCompatActivity
         Date toDate = c.getTime();
         String toString = sdf.format(toDate);
 
-        String itemFilter = String.format("%1$s >= '%2$s' AND %1$s <= '%3$s'",
-                DBHelper.COLUMN_ASSESSMENT_GOAL, fromString, toString);
+        // create the SQL string and initialize the Loader
+        String itemFilter;
 
-        return new CursorLoader(this, AssessmentProvider.CONTENT_URI, null, itemFilter, null, null);
+        switch (i) {
+            case 0:
+                itemFilter = String.format("%1$s >= '%2$s' AND %1$s <= '%3$s'",
+                        DBHelper.COLUMN_ASSESSMENT_GOAL, fromString, toString);
+
+                return new CursorLoader(this, AssessmentProvider.CONTENT_URI, null, itemFilter, null, null);
+            case 1:
+                itemFilter = String.format("%1$s >= '%2$s' AND %1$s <= '%3$s'",
+                        DBHelper.COLUMN_COURSE_START, fromString, toString);
+
+                return new CursorLoader(this, CourseProvider.CONTENT_URI, null, itemFilter, null, null);
+            case 2:
+                itemFilter = String.format("%1$s >= '%2$s' AND %1$s <= '%3$s'",
+                        DBHelper.COLUMN_COURSE_END, fromString, toString);
+
+                return new CursorLoader(this, CourseProvider.CONTENT_URI, null, itemFilter, null, null);
+            default:
+                return null;
+        }
     }
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
-        cursorAdapter.swapCursor(cursor);
-        setAssessmentMessage(cursor.getCount());
+        // replace the cursor in the appropriate CursorAdapter
+        // update the appropriate TextView
+        switch (loader.getId()) {
+            case 0:
+                assessmentCursorAdapter.swapCursor(cursor);
+                setAssessmentMessage(cursor.getCount());
+                break;
+            case 1:
+                coursesStartingCursorAdapter.swapCursor(cursor);
+                setCoursesStartingMessage(cursor.getCount());
+                break;
+            case 2:
+                coursesEndingCursorAdapter.swapCursor(cursor);
+                setCoursesEndingMessage(cursor.getCount());
+                break;
+            default:
+                break;
+        }
     }
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
-        cursorAdapter.swapCursor(null);
+        // clear the appropriate CursorAdapter
+        switch (loader.getId()) {
+            case 0:
+                assessmentCursorAdapter.swapCursor(null);
+                break;
+            case 1:
+                coursesStartingCursorAdapter.swapCursor(null);
+                break;
+            case 2:
+                coursesEndingCursorAdapter.swapCursor(null);
+                break;
+            default:
+                break;
+        }
     }
 
     @Override
@@ -123,6 +163,66 @@ public class MainActivity extends AppCompatActivity
         Intent intent = new Intent(MainActivity.this, TermListActivity.class);
         intent.putExtra(AssessmentProvider.CONTENT_ITEM_TYPE, TermProvider.CONTENT_URI);
         startActivityForResult(intent, TERMLIST_EDITOR_REQUEST_CODE);
+    }
+
+    private void initializeAssessmentList() {
+        assessmentCursorAdapter = new AssessmentCursorAdapter(this, null, 0);
+
+        ListView list = (ListView) findViewById(R.id.mainAssessmentsListView);
+        list.setAdapter(assessmentCursorAdapter);
+
+        list.setOnItemClickListener(
+                new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        Intent intent = new Intent(MainActivity.this, AssessmentActivity.class);
+                        Uri uri = Uri.parse(AssessmentProvider.CONTENT_URI + "/" + id);
+                        intent.putExtra(AssessmentProvider.CONTENT_ITEM_TYPE, uri);
+                        startActivityForResult(intent, ASSESSMENT_EDITOR_REQUEST_CODE);
+                    }
+                });
+
+        getLoaderManager().initLoader(0, null, this);
+    }
+
+    private void initializeCourseStartingList() {
+        coursesStartingCursorAdapter = new CourseCursorAdapter(this, null, 0);
+
+        ListView list = (ListView) findViewById(R.id.mainCoursesStartingListView);
+        list.setAdapter(coursesStartingCursorAdapter);
+
+        list.setOnItemClickListener(
+                new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        Intent intent = new Intent(MainActivity.this, CourseActivity.class);
+                        Uri uri = Uri.parse(CourseProvider.CONTENT_URI + "/" + id);
+                        intent.putExtra(CourseProvider.CONTENT_ITEM_TYPE, uri);
+                        startActivityForResult(intent, COURSESTART_EDITOR_REQUEST_CODE);
+                    }
+                });
+
+        getLoaderManager().initLoader(1, null, this);
+    }
+
+    private void initializeCourseEndingList() {
+        coursesEndingCursorAdapter = new CourseCursorAdapter(this, null, 0);
+
+        ListView list = (ListView) findViewById(R.id.mainCoursesEndingListView);
+        list.setAdapter(coursesEndingCursorAdapter);
+
+        list.setOnItemClickListener(
+                new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        Intent intent = new Intent(MainActivity.this, CourseActivity.class);
+                        Uri uri = Uri.parse(CourseProvider.CONTENT_URI + "/" + id);
+                        intent.putExtra(CourseProvider.CONTENT_ITEM_TYPE, uri);
+                        startActivityForResult(intent, COURSEEND_EDITOR_REQUEST_CODE);
+                    }
+                });
+
+        getLoaderManager().initLoader(2, null, this);
     }
 
     private void promptUserForToDoWindow() {
@@ -160,12 +260,25 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void restartLoader() {
+        // just reload all three lists
         getLoaderManager().restartLoader(0, null, this);
+        getLoaderManager().restartLoader(1, null, this);
+        getLoaderManager().restartLoader(2, null, this);
     }
 
     private void setAssessmentMessage(int count) {
         TextView v = (TextView) findViewById(R.id.mainAssessmentsDueTextView);
         v.setText(getResources().getQuantityString(R.plurals.numberOfAssessmentsDue, count, count));
+    }
+
+    private void setCoursesStartingMessage(int count) {
+        TextView v = (TextView) findViewById(R.id.mainCoursesStartingTextView);
+        v.setText(getResources().getQuantityString(R.plurals.numberOfCoursesStarting, count, count));
+    }
+
+    private void setCoursesEndingMessage(int count) {
+        TextView v = (TextView) findViewById(R.id.mainCoursesEndingTextView);
+        v.setText(getResources().getQuantityString(R.plurals.numberOfCoursesEnding, count, count));
     }
 
     private int convertIdToWindow(int id) {
