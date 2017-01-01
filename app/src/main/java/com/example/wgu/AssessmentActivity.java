@@ -1,6 +1,8 @@
 package com.example.wgu;
 
+import android.app.AlertDialog;
 import android.content.ContentValues;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
@@ -142,10 +144,24 @@ public class AssessmentActivity extends AppCompatActivity {
     }
 
     private void deleteItem() {
-        getContentResolver().delete(AssessmentProvider.CONTENT_URI, itemFilter, null);
-        Toast.makeText(this, R.string.assessment_deleted, Toast.LENGTH_SHORT).show();
-        setResult(RESULT_OK);
-        finish();
+        DialogInterface.OnClickListener dialogClickListener =
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int button) {
+                        if (button == DialogInterface.BUTTON_POSITIVE) {
+                            getContentResolver().delete(AssessmentProvider.CONTENT_URI, itemFilter, null);
+                            Toast.makeText(AssessmentActivity.this, R.string.assessment_deleted, Toast.LENGTH_SHORT).show();
+                            setResult(RESULT_OK);
+                            finish();
+                        }
+                    }
+                };
+
+        new AlertDialog.Builder(this)
+                .setMessage(getString(R.string.are_you_sure))
+                .setPositiveButton(getString(android.R.string.yes), dialogClickListener)
+                .setNegativeButton(getString(android.R.string.no), dialogClickListener)
+                .show();
     }
 
     private void updateItem(AssessmentModel assessment) {

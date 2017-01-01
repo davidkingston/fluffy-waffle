@@ -1,6 +1,8 @@
 package com.example.wgu;
 
+import android.app.AlertDialog;
 import android.content.ContentValues;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
@@ -153,10 +155,24 @@ public class CourseActivity extends AppCompatActivity {
     }
 
     private void deleteItem() {
-        getContentResolver().delete(CourseProvider.CONTENT_URI, itemFilter, null);
-        Toast.makeText(this, R.string.course_deleted, Toast.LENGTH_SHORT).show();
-        setResult(RESULT_OK);
-        finish();
+        DialogInterface.OnClickListener dialogClickListener =
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int button) {
+                        if (button == DialogInterface.BUTTON_POSITIVE) {
+                            getContentResolver().delete(CourseProvider.CONTENT_URI, itemFilter, null);
+                            Toast.makeText(CourseActivity.this, R.string.course_deleted, Toast.LENGTH_SHORT).show();
+                            setResult(RESULT_OK);
+                            finish();
+                        }
+                    }
+                };
+
+        new AlertDialog.Builder(this)
+                .setMessage(getString(R.string.are_you_sure))
+                .setPositiveButton(getString(android.R.string.yes), dialogClickListener)
+                .setNegativeButton(getString(android.R.string.no), dialogClickListener)
+                .show();
     }
 
     private void updateItem(CourseModel course) {
