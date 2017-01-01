@@ -10,7 +10,7 @@
         android:layout_width="36dp"
         android:layout_height="36dp"
         android:contentDescription="@string/term"
-        android:src="@drawable/ic_term" />
+        android:src="@drawable/ic_action_course" />
 
     <TextView
         android:id="@+id/courseListTitleTextView"
