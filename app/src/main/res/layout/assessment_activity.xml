@@ -31,7 +31,8 @@
         android:layout_toEndOf="@+id/assessmentTitleTextView"
         android:layout_toRightOf="@+id/assessmentTitleTextView"
         android:hint="@string/enter_a_new_assessment_title"
-        android:inputType="textCapWords" />
+        android:inputType="textCapWords"
+        android:maxLines="1" />
 
     <TextView
         android:id="@+id/assessmentDueTextView"

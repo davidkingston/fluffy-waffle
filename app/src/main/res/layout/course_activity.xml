@@ -31,7 +31,8 @@
         android:layout_toEndOf="@+id/courseTitleTextView"
         android:layout_toRightOf="@+id/courseTitleTextView"
         android:hint="@string/enter_a_new_course_title"
-        android:inputType="textCapWords" />
+        android:inputType="textCapWords"
+        android:maxLines="1" />
 
     <TextView
         android:id="@+id/courseStartTextView"

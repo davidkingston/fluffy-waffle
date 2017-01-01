@@ -32,7 +32,8 @@
         android:layout_toRightOf="@+id/mentorNameTextView"
         android:ems="12"
         android:hint="@string/enter_a_new_mentor_title"
-        android:inputType="textCapWords" />
+        android:inputType="textCapWords"
+        android:maxLines="1" />
 
     <TextView
         android:id="@+id/mentorEmailTextView"
@@ -58,7 +59,9 @@
         android:layout_toEndOf="@+id/mentorEmailTextView"
         android:layout_toRightOf="@+id/mentorEmailTextView"
         android:ems="10"
-        android:hint="@string/mentor_email_hint" />
+        android:hint="@string/mentor_email_hint"
+        android:inputType="textEmailAddress"
+        android:maxLines="1" />
 
     <TextView
         android:id="@+id/mentorPhoneTextView"
@@ -83,6 +86,8 @@
         android:layout_below="@+id/mentorEmailEditText"
         android:layout_toEndOf="@+id/mentorPhoneTextView"
         android:layout_toRightOf="@+id/mentorPhoneTextView"
-        android:hint="@string/mentor_phone_hint" />
+        android:hint="@string/mentor_phone_hint"
+        android:inputType="phone"
+        android:maxLines="1" />
 
 </RelativeLayout>
