@@ -12,7 +12,6 @@
         tools:ignore="AllowBackup">
         <activity
             android:name=".MainActivity"
-            android:label="Welcome!"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
