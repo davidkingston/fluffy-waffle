@@ -60,7 +60,7 @@ public class MentorActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         if (action.equals(Intent.ACTION_EDIT)) {
-            getMenuInflater().inflate(R.menu.menu_term, menu);
+            getMenuInflater().inflate(R.menu.menu_delete, menu);
         }
         return true;
     }
