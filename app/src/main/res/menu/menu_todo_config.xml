@@ -4,7 +4,8 @@
     tools:context="com.example.wgu.TermListActivity">
     <item
         android:id="@+id/configure_todo_window"
+        android:icon="@drawable/ic_action_settings"
         android:orderInCategory="100"
         android:title="@string/configure_to_do"
-        app:showAsAction="never" />
+        app:showAsAction="always" />
 </menu>
