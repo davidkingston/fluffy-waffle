@@ -7,4 +7,6 @@
     <dimen name="control_width_96">96dp</dimen>
     <dimen name="text_size_18">18sp</dimen>
     <dimen name="main_list_height">120dp</dimen>
+    <dimen name="list_button_text_size">24sp</dimen>
+    <dimen name="list_button_layout_height">48dp</dimen>
 </resources>

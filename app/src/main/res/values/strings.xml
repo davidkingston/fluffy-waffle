@@ -19,12 +19,12 @@
     <string name="termStartDateTextView_text">Start Date:</string>
     <string name="termEndDateTextView_text">End Date:</string>
     <string name="term_inserted">Term inserted.</string>
-    <string name="course_list_button_text">Course List</string>
+    <string name="course_list_button_text">Courses</string>
     <string name="courseTitleTextView_text">Title:</string>
     <string name="enter_a_new_course_title">Enter a new title</string>
     <string name="courseStartDateTextView_text">Start Date:</string>
     <string name="courseEndDateTextView_text">End Date:</string>
-    <string name="assessment_list_button_text">Assessment List</string>
+    <string name="assessment_list_button_text">Assessments</string>
     <string name="courseStatusTextView_Text">Status:</string>
     <string name="new_course">New Course</string>
     <string name="new_assessment">New Assessment</string>
@@ -48,7 +48,7 @@
     <string name="assessment_due_date_hint">Enter a due date</string>
     <string name="assessmentObjectiveRadioButton_text">Objective</string>
     <string name="assessmentPerformanceRadioButton_text">Performance</string>
-    <string name="mentor_list_button_text">Mentor List</string>
+    <string name="mentor_list_button_text">Mentors</string>
     <string name="mentorNameTextView_text">Name:</string>
     <string name="enter_a_new_mentor_title">Enter a new mentor name</string>
     <string name="mentorEmailTextView_text">Email:</string>
@@ -60,7 +60,7 @@
     <string name="mentor_deleted">Mentor deleted.</string>
     <string name="mentor_updated">Mentor updated.</string>
     <string name="mentor_inserted">Mentor inserted.</string>
-    <string name="term_list_button_text">Term List</string>
+    <string name="term_list_button_text">Terms</string>
     <string name="dummy_text">Dummy Text</string>
     <string name="welcome_to_the_wgu_student_portal">Welcome to the WGU student portal.</string>
     <string name="no_assessments_due">No assessments due.</string>

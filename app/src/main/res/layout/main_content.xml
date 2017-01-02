@@ -98,12 +98,8 @@
     <LinearLayout
         style="?android:attr/buttonBarStyle"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="@dimen/list_button_layout_height"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentStart="true"
         android:layout_centerHorizontal="true"
         android:gravity="center_horizontal"
         android:orientation="horizontal">
@@ -115,7 +111,7 @@
             android:layout_height="wrap_content"
             android:onClick="openTermList"
             android:text="@string/term_list_button_text"
-            android:textSize="@dimen/text_size_18" />
+            android:textSize="@dimen/list_button_text_size" />
 
     </LinearLayout>
 
