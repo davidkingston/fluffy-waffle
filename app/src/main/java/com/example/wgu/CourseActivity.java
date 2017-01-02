@@ -2,11 +2,13 @@ package com.example.wgu;
 
 import android.app.AlertDialog;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -48,17 +50,10 @@ public class CourseActivity extends AppCompatActivity {
             action = Intent.ACTION_INSERT;
             setTitle(getString(R.string.new_course));
         } else {
-            action = Intent.ACTION_EDIT;
-            setTitle(getString(R.string.edit_course));
-
             currentRecordId = Integer.parseInt(uri.getLastPathSegment());
-            itemFilter = DBHelper.COLUMN_COURSE_ID + "=" + currentRecordId;
+            initializeActivityPropertiesForEdit();
 
-            Cursor cursor = getContentResolver().query(uri, DBHelper.ALL_COURSE_COLUMNS,
-                    itemFilter, null, null);
-            cursor.moveToFirst();
-
-            oldCourse = new CourseModel(cursor);
+            initializeModel(uri);
 
             populateUIObjects();
 
@@ -95,6 +90,36 @@ public class CourseActivity extends AppCompatActivity {
         finishEditing();
     }
 
+    private void initializeModel(Uri uri) {
+        Cursor cursor = getContentResolver().query(uri, DBHelper.ALL_COURSE_COLUMNS,
+                itemFilter, null, null);
+        cursor.moveToFirst();
+
+        oldCourse = new CourseModel(cursor);
+    }
+
+    private boolean hasChildren() {
+        String assessmentFilter = DBHelper.COLUMN_ASSESSMENT_COURSE_ID + " = " + currentRecordId;
+        Cursor assessmentCursor = getContentResolver().query(AssessmentProvider.CONTENT_URI, DBHelper.ALL_ASSESSMENT_COLUMNS,
+                assessmentFilter, null, null);
+        if (assessmentCursor.getCount() > 0) {
+            return true;
+        }
+
+        String mentorFilter = DBHelper.COLUMN_MENTOR_COURSE_ID + " = " + currentRecordId;
+        Cursor mentorCursor = getContentResolver().query(MentorProvider.CONTENT_URI, DBHelper.ALL_MENTOR_COLUMNS,
+                mentorFilter, null, null);
+
+
+        return (mentorCursor.getCount() > 0);
+    }
+
+    private void initializeActivityPropertiesForEdit() {
+        action = Intent.ACTION_EDIT;
+        setTitle(getString(R.string.edit_course));
+        itemFilter = DBHelper.COLUMN_COURSE_ID + "=" + currentRecordId;
+    }
+
     private void initializeUIObjects() {
         titleEditText = (EditText) findViewById(R.id.courseTitleEditText);
         startDateEditText = (EditText) findViewById(R.id.courseStartEditText);
@@ -125,12 +150,7 @@ public class CourseActivity extends AppCompatActivity {
     }
 
     private void finishEditing() {
-        CourseModel newCourse = new CourseModel(termId,
-                titleEditText.getText().toString().trim(),
-                startDateEditText.getText().toString().trim(),
-                endDateEditText.getText().toString().trim(),
-                statusSpinner.getItemAtPosition(statusSpinner.getSelectedItemPosition()).toString()
-        );
+        CourseModel newCourse = getCourseModel();
 
         switch (action) {
             case Intent.ACTION_INSERT:
@@ -144,7 +164,7 @@ public class CourseActivity extends AppCompatActivity {
                 if (newCourse.getTitle().length() == 0) {
                     titleEditText.setError("Title is required.");
                     return;
-                } else if (oldCourse.equals(newCourse)) {
+                } else if (oldCourse != null && oldCourse.equals(newCourse)) {
                     setResult(RESULT_CANCELED);
                 } else {
                     updateItem(newCourse);
@@ -154,7 +174,24 @@ public class CourseActivity extends AppCompatActivity {
         finish();
     }
 
+    private CourseModel getCourseModel() {
+        return new CourseModel(termId,
+                titleEditText.getText().toString().trim(),
+                startDateEditText.getText().toString().trim(),
+                endDateEditText.getText().toString().trim(),
+                statusSpinner.getItemAtPosition(statusSpinner.getSelectedItemPosition()).toString()
+        );
+    }
+
     private void deleteItem() {
+        if (hasChildren()) {
+            Snackbar.make(findViewById(R.id.courseActivity),
+                    "This Course cannot be deleted while it has associated Assessments or Mentors.",
+                    Snackbar.LENGTH_LONG)
+                    .show();
+            return;
+        }
+
         DialogInterface.OnClickListener dialogClickListener =
                 new DialogInterface.OnClickListener() {
                     @Override
@@ -182,11 +219,13 @@ public class CourseActivity extends AppCompatActivity {
         setResult(RESULT_OK);
     }
 
-    private void insertItem(CourseModel course) {
+    private int insertItem(CourseModel course) {
         ContentValues values = getContentValuesFromModel(course);
-        getContentResolver().insert(CourseProvider.CONTENT_URI, values);
+        Uri uri = getContentResolver().insert(CourseProvider.CONTENT_URI, values);
+        int newId = Integer.parseInt(uri.getLastPathSegment());
         Toast.makeText(this, R.string.course_inserted, Toast.LENGTH_SHORT).show();
         setResult(RESULT_OK);
+        return newId;
     }
 
     private ContentValues getContentValuesFromModel(CourseModel course) {
@@ -201,16 +240,44 @@ public class CourseActivity extends AppCompatActivity {
 
 
     public void openAssessmentList(View view) {
-        Intent intent = new Intent(CourseActivity.this, AssessmentListActivity.class);
-        Uri uri = Uri.parse(AssessmentProvider.CONTENT_URI + "/c/" + currentRecordId);
-        intent.putExtra(AssessmentProvider.CONTENT_ITEM_TYPE, uri);
-        startActivityForResult(intent, ASSESSMENTLIST_EDITOR_REQUEST_CODE);
+        openChildList(CourseActivity.this,
+                AssessmentListActivity.class,
+                AssessmentProvider.CONTENT_URI,
+                AssessmentProvider.CONTENT_ITEM_TYPE,
+                ASSESSMENTLIST_EDITOR_REQUEST_CODE);
     }
 
     public void openMentorList(View view) {
-        Intent intent = new Intent(CourseActivity.this, MentorListActivity.class);
-        Uri uri = Uri.parse(MentorProvider.CONTENT_URI + "/c/" + currentRecordId);
-        intent.putExtra(MentorProvider.CONTENT_ITEM_TYPE, uri);
-        startActivityForResult(intent, MENTORLIST_EDITOR_REQUEST_CODE);
+        openChildList(CourseActivity.this,
+                MentorListActivity.class,
+                MentorProvider.CONTENT_URI,
+                MentorProvider.CONTENT_ITEM_TYPE,
+                MENTORLIST_EDITOR_REQUEST_CODE);
+    }
+
+    public void openChildList(Context context, Class targetClass, Uri targetUri, String targetItemType, int requestCode) {
+        CourseModel newCourse = getCourseModel();
+
+        if (newCourse.getTitle().length() == 0) {
+            titleEditText.setError("Title is required.");
+            return;
+        }
+        switch (action) {
+            case Intent.ACTION_INSERT:
+                currentRecordId = insertItem(newCourse);
+                initializeActivityPropertiesForEdit();
+                invalidateOptionsMenu();
+                break;
+            case Intent.ACTION_EDIT:
+                if (oldCourse != null && !oldCourse.equals(newCourse)) {
+                    updateItem(newCourse);
+                }
+                break;
+        }
+
+        Intent intent = new Intent(context, targetClass);
+        Uri uri = Uri.parse(targetUri + "/c/" + currentRecordId);
+        intent.putExtra(targetItemType, uri);
+        startActivityForResult(intent, requestCode);
     }
 }

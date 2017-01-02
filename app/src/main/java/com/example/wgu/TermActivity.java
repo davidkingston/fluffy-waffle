@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -41,17 +42,10 @@ public class TermActivity extends AppCompatActivity {
             action = Intent.ACTION_INSERT;
             setTitle(getString(R.string.new_term));
         } else {
-            action = Intent.ACTION_EDIT;
-            setTitle(getString(R.string.edit_term));
-
             currentRecordId = Integer.parseInt(uri.getLastPathSegment());
-            itemFilter = DBHelper.COLUMN_TERM_ID + "=" + currentRecordId;
+            initializeActivityPropertiesForEdit();
 
-            Cursor cursor = getContentResolver().query(uri, DBHelper.ALL_TERM_COLUMNS,
-                    itemFilter, null, null);
-            cursor.moveToFirst();
-
-            oldTerm = new TermModel(cursor);
+            initializeModel(uri);
 
             populateUIObjects();
 
@@ -88,6 +82,27 @@ public class TermActivity extends AppCompatActivity {
         finishEditing();
     }
 
+    private void initializeModel(Uri uri) {
+        Cursor cursor = getContentResolver().query(uri, DBHelper.ALL_TERM_COLUMNS,
+                itemFilter, null, null);
+        cursor.moveToFirst();
+
+        oldTerm = new TermModel(cursor);
+    }
+
+    private boolean hasChildren() {
+        String childFilter = DBHelper.COLUMN_COURSE_TERM_ID + " = " + currentRecordId;
+        Cursor cursor = getContentResolver().query(CourseProvider.CONTENT_URI, DBHelper.ALL_COURSE_COLUMNS,
+                childFilter, null, null);
+        return (cursor.getCount() > 0);
+    }
+
+    private void initializeActivityPropertiesForEdit() {
+        action = Intent.ACTION_EDIT;
+        setTitle(getString(R.string.edit_term));
+        itemFilter = DBHelper.COLUMN_TERM_ID + "=" + currentRecordId;
+    }
+
     private void initializeUIObjects() {
         titleEditText = (EditText) findViewById(R.id.termTitleEditText);
         startDateEditText = (EditText) findViewById(R.id.termStartEditText);
@@ -104,11 +119,7 @@ public class TermActivity extends AppCompatActivity {
     }
 
     private void finishEditing() {
-        TermModel newTerm = new TermModel(
-                titleEditText.getText().toString().trim(),
-                startDateEditText.getText().toString().trim(),
-                endDateEditText.getText().toString().trim()
-        );
+        TermModel newTerm = getTermModel();
 
         switch (action) {
             case Intent.ACTION_INSERT:
@@ -121,7 +132,7 @@ public class TermActivity extends AppCompatActivity {
             case Intent.ACTION_EDIT:
                 if (newTerm.isEmpty()) {
                     deleteItem();
-                } else if (oldTerm.equals(newTerm)) {
+                } else if (oldTerm != null && oldTerm.equals(newTerm)) {
                     setResult(RESULT_CANCELED);
                 } else {
                     updateItem(newTerm);
@@ -132,7 +143,23 @@ public class TermActivity extends AppCompatActivity {
         finish();
     }
 
+    private TermModel getTermModel() {
+        return new TermModel(
+                titleEditText.getText().toString().trim(),
+                startDateEditText.getText().toString().trim(),
+                endDateEditText.getText().toString().trim()
+        );
+    }
+
     private void deleteItem() {
+        if (hasChildren()) {
+            Snackbar.make(findViewById(R.id.termActivity),
+                    "This Term cannot be deleted while it has associated Courses.",
+                    Snackbar.LENGTH_LONG)
+                    .show();
+            return;
+        }
+
         DialogInterface.OnClickListener dialogClickListener =
                 new DialogInterface.OnClickListener() {
                     @Override
@@ -145,6 +172,7 @@ public class TermActivity extends AppCompatActivity {
                         }
                     }
                 };
+
 
         new AlertDialog.Builder(this)
                 .setMessage(getString(R.string.are_you_sure))
@@ -160,11 +188,13 @@ public class TermActivity extends AppCompatActivity {
         setResult(RESULT_OK);
     }
 
-    private void insertItem(TermModel term) {
+    private int insertItem(TermModel term) {
         ContentValues values = getContentValuesFromModel(term);
-        getContentResolver().insert(TermProvider.CONTENT_URI, values);
+        Uri uri = getContentResolver().insert(TermProvider.CONTENT_URI, values);
+        int newId = Integer.parseInt(uri.getLastPathSegment());
         Toast.makeText(this, R.string.term_inserted, Toast.LENGTH_SHORT).show();
         setResult(RESULT_OK);
+        return newId;
     }
 
     private ContentValues getContentValuesFromModel(TermModel term) {
@@ -176,6 +206,25 @@ public class TermActivity extends AppCompatActivity {
     }
 
     public void openCourseList(View view) {
+        TermModel newTerm = getTermModel();
+
+        if (newTerm.getTitle().length() == 0) {
+            titleEditText.setError("Title is required.");
+            return;
+        }
+        switch (action) {
+            case Intent.ACTION_INSERT:
+                currentRecordId = insertItem(newTerm);
+                initializeActivityPropertiesForEdit();
+                invalidateOptionsMenu();
+                break;
+            case Intent.ACTION_EDIT:
+                if (oldTerm != null && !oldTerm.equals(newTerm)) {
+                    updateItem(newTerm);
+                }
+                break;
+        }
+
         Intent intent = new Intent(TermActivity.this, CourseListActivity.class);
         Uri uri = Uri.parse(CourseProvider.CONTENT_URI + "/t/" + currentRecordId);
         intent.putExtra(CourseProvider.CONTENT_ITEM_TYPE, uri);
