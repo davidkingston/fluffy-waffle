@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:baselineAligned="false"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.example.wgu.AssessmentActivity">
+
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.50">
+
+        <TextView
+            android:id="@+id/assessmentTitleTextView"
+            android:layout_width="@dimen/control_width_96"
+            android:layout_height="@dimen/control_height_48"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:gravity="end|center_vertical"
+            android:text="@string/assessmentTitleTextView_text"
+            android:textSize="@dimen/text_size_18" />
+
+        <EditText
+            android:id="@+id/assessmentTitleEditText"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/control_height_48"
+            android:layout_alignBottom="@+id/assessmentTitleTextView"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_toEndOf="@+id/assessmentTitleTextView"
+            android:layout_toRightOf="@+id/assessmentTitleTextView"
+            android:hint="@string/enter_a_new_assessment_title"
+            android:inputType="textCapWords"
+            android:maxLines="1" />
+
+        <TextView
+            android:id="@+id/assessmentDueTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/control_height_48"
+            android:layout_alignEnd="@+id/assessmentTitleTextView"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignRight="@+id/assessmentTitleTextView"
+            android:layout_below="@+id/assessmentTitleTextView"
+            android:gravity="end|center_vertical"
+            android:text="@string/assessmentDueDateTextView_text"
+            android:textSize="@dimen/text_size_18" />
+
+        <EditText
+            android:id="@+id/assessmentDueEditText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/assessmentDueTextView"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/assessmentTitleEditText"
+            android:layout_toEndOf="@+id/assessmentDueTextView"
+            android:layout_toRightOf="@+id/assessmentDueTextView"
+            android:focusable="false"
+            android:hint="@string/assessment_due_date_hint" />
+
+        <TextView
+            android:id="@+id/assessmentGoalTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/control_height_48"
+            android:layout_alignEnd="@+id/assessmentDueTextView"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignRight="@+id/assessmentDueTextView"
+            android:layout_below="@+id/assessmentDueTextView"
+            android:gravity="end|center_vertical"
+            android:text="@string/assessmentGoalDateTextView_text"
+            android:textSize="@dimen/text_size_18" />
+
+        <EditText
+            android:id="@+id/assessmentGoalEditText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/assessmentGoalTextView"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/assessmentDueEditText"
+            android:layout_toEndOf="@+id/assessmentGoalTextView"
+            android:layout_toRightOf="@+id/assessmentGoalTextView"
+            android:focusable="false"
+            android:hint="@string/assessment_goal_date_hint" />
+
+        <TextView
+            android:id="@+id/assessmentTypeTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/control_height_48"
+            android:layout_alignEnd="@+id/assessmentGoalTextView"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignRight="@+id/assessmentGoalTextView"
+            android:layout_below="@+id/assessmentGoalTextView"
+            android:gravity="end|center_vertical"
+            android:text="@string/assessmentTypeTextView_Text"
+            android:textSize="@dimen/text_size_18" />
+
+        <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/assessmentTypeRadioGroup"
+            style="?android:attr/buttonBarStyle"
+            android:layout_width="fill_parent"
+            android:layout_height="72dp"
+            android:layout_alignParentLeft="false"
+            android:layout_alignParentStart="false"
+            android:layout_below="@+id/assessmentGoalEditText"
+            android:layout_toEndOf="@+id/assessmentTypeTextView"
+            android:layout_toRightOf="@+id/assessmentTypeTextView"
+            android:gravity="center_vertical|start"
+            android:orientation="vertical">
+
+            <RadioButton
+                android:id="@+id/assessmentObjectiveRadioButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/assessmentObjectiveRadioButton_text"
+                android:textSize="@dimen/text_size_18" />
+
+            <RadioButton
+                android:id="@+id/assessmentPerformanceRadioButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/assessmentPerformanceRadioButton_text"
+                android:textSize="@dimen/text_size_18" />
+
+        </RadioGroup>
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.50"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/assessmentNoteTextView"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/control_height_48"
+            android:gravity="center_vertical|start"
+            android:text="@string/assessmentNoteTextView_Text"
+            android:textSize="@dimen/text_size_18" />
+
+        <EditText
+            android:id="@+id/assessmentNoteEditText"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="top|start"
+            android:inputType="textMultiLine" />
+    </LinearLayout>
+
+</LinearLayout>
