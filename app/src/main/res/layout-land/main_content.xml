@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.example.wgu.MainActivity"
+    tools:showIn="@layout/main_activity">
+
+    <TextView
+        android:id="@+id/mainWelcomeTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:gravity="center_vertical|center_horizontal"
+        android:text="@string/welcome_to_the_wgu_student_portal"
+        android:textSize="30sp" />
+
+    <TextView
+        android:id="@+id/mainAssessmentsDueTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="false"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="false"
+        android:layout_alignParentStart="true"
+        android:layout_below="@id/mainWelcomeTextView"
+        android:gravity="start"
+        android:text="@string/dummy_text"
+        android:textSize="@dimen/text_size_18" />
+
+    <ListView
+        android:id="@+id/mainAssessmentsListView"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/main_list_height"
+        android:layout_alignParentEnd="false"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="false"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/mainAssessmentsDueTextView"
+        android:layout_alignRight="@+id/mainAssessmentsDueTextView"
+        android:layout_alignEnd="@+id/mainAssessmentsDueTextView" />
+
+    <TextView
+        android:id="@+id/mainCoursesStartingTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="false"
+        android:layout_alignParentLeft="false"
+        android:layout_alignParentRight="false"
+        android:layout_alignParentStart="false"
+        android:layout_below="@+id/mainWelcomeTextView"
+        android:gravity="start"
+        android:text="@string/dummy_text"
+        android:textSize="@dimen/text_size_18"
+        android:layout_toRightOf="@+id/mainAssessmentsDueTextView"
+        android:layout_toEndOf="@+id/mainAssessmentsDueTextView"
+        android:layout_alignBottom="@+id/mainAssessmentsDueTextView" />
+
+    <ListView
+        android:id="@+id/mainCoursesStartingListView"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/main_list_height"
+        android:layout_alignParentEnd="false"
+        android:layout_alignParentLeft="false"
+        android:layout_alignParentRight="false"
+        android:layout_alignParentStart="false"
+        android:layout_below="@+id/mainCoursesStartingTextView"
+        android:layout_alignRight="@+id/mainCoursesStartingTextView"
+        android:layout_alignEnd="@+id/mainCoursesStartingTextView"
+        android:layout_alignLeft="@+id/mainCoursesStartingTextView"
+        android:layout_alignStart="@+id/mainCoursesStartingTextView"
+        android:layout_alignBottom="@+id/mainAssessmentsListView"
+        android:layout_toRightOf="@+id/mainAssessmentsListView"
+        android:layout_toEndOf="@+id/mainAssessmentsListView" />
+
+    <TextView
+        android:id="@+id/mainCoursesEndingTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="false"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentStart="false"
+        android:layout_below="@+id/mainWelcomeTextView"
+        android:gravity="start"
+        android:text="@string/dummy_text"
+        android:textSize="@dimen/text_size_18"
+        android:layout_toRightOf="@+id/mainCoursesStartingTextView"
+        android:layout_toEndOf="@+id/mainCoursesStartingTextView"
+        android:layout_alignBottom="@+id/mainCoursesStartingTextView" />
+
+    <ListView
+        android:id="@+id/mainCoursesEndingListView"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/main_list_height"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="false"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentStart="false"
+        android:layout_below="@+id/mainCoursesEndingTextView"
+        android:layout_toRightOf="@+id/mainCoursesStartingListView"
+        android:layout_toEndOf="@+id/mainCoursesStartingListView"
+        android:layout_alignBottom="@+id/mainCoursesStartingListView" />
+
+    <LinearLayout
+        style="?android:attr/buttonBarStyle"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentStart="true"
+        android:layout_centerHorizontal="true"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/termListButton"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="openTermList"
+            android:text="@string/term_list_button_text"
+            android:textSize="@dimen/text_size_18" />
+
+    </LinearLayout>
+
+</RelativeLayout>
