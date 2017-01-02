@@ -14,7 +14,7 @@
     <string name="edit_term">Edit term</string>
     <string name="term_deleted">Term deleted.</string>
     <string name="term">Term</string>
-    <string name="enter_a_new_term_title">Enter a new term title</string>
+    <string name="enter_a_new_term_title">Enter a new title</string>
     <string name="termTitleTextView_text">Title:</string>
     <string name="termStartDateTextView_text">Start Date:</string>
     <string name="termEndDateTextView_text">End Date:</string>
@@ -40,7 +40,7 @@
     <string name="start_date_hint">Enter a start date</string>
     <string name="end_date_hint">Enter an end date</string>
     <string name="assessmentTitleTextView_text">Title:</string>
-    <string name="enter_a_new_assessment_title">Enter a new assessment title</string>
+    <string name="enter_a_new_assessment_title">Enter a new title</string>
     <string name="assessmentDueDateTextView_text">Due Date:</string>
     <string name="assessmentGoalDateTextView_text">Goal Date:</string>
     <string name="assessmentTypeTextView_Text">Type:</string>
