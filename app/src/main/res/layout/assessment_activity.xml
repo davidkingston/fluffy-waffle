@@ -100,6 +100,7 @@
         android:textSize="@dimen/text_size_18" />
 
     <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/assessmentTypeRadioGroup"
         style="?android:attr/buttonBarStyle"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -129,5 +130,27 @@
             android:textSize="@dimen/text_size_18" />
 
     </RadioGroup>
+
+    <TextView
+        android:id="@+id/assessmentNoteTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/control_height_48"
+        android:layout_alignEnd="@+id/assessmentTypeTextView"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignRight="@+id/assessmentTypeTextView"
+        android:layout_below="@+id/assessmentTypeTextView"
+        android:gravity="end|center_vertical"
+        android:text="@string/assessmentNoteTextView_Text"
+        android:textSize="@dimen/text_size_18" />
+
+    <EditText
+        android:id="@+id/assessmentNoteEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/assessmentNoteTextView"
+        android:inputType="textMultiLine"
+        android:gravity="top|left" />
 
 </RelativeLayout>

@@ -23,6 +23,7 @@ public class AssessmentActivity extends AppCompatActivity {
     private EditText goalDateEditText;
     private RadioButton objectiveRadioButton;
     private RadioButton performanceRadioButton;
+    private EditText noteEditText;
     private String itemFilter;
     private int currentRecordId;
     private int courseId;
@@ -99,6 +100,7 @@ public class AssessmentActivity extends AppCompatActivity {
         goalDateEditText = (EditText) findViewById(R.id.assessmentGoalEditText);
         objectiveRadioButton = (RadioButton) findViewById(R.id.assessmentObjectiveRadioButton);
         performanceRadioButton = (RadioButton) findViewById(R.id.assessmentPerformanceRadioButton);
+        noteEditText = (EditText) findViewById(R.id.assessmentNoteEditText);
 
         MyDatePicker.initialize(dueDateEditText);
         MyDatePicker.initialize(goalDateEditText);
@@ -111,15 +113,12 @@ public class AssessmentActivity extends AppCompatActivity {
 
         objectiveRadioButton.setChecked(oldAssessment.getType().equals("o"));
         performanceRadioButton.setChecked(oldAssessment.getType().equals("p"));
+
+        noteEditText.setText(oldAssessment.getNote());
     }
 
     private void finishEditing() {
-        AssessmentModel newAssessment = new AssessmentModel(courseId,
-                titleEditText.getText().toString().trim(),
-                dueDateEditText.getText().toString().trim(),
-                goalDateEditText.getText().toString().trim(),
-                objectiveRadioButton.isChecked() ? "o" : performanceRadioButton.isChecked() ? "p" : ""
-        );
+        AssessmentModel newAssessment = getAssessmentModel();
 
         switch (action) {
             case Intent.ACTION_INSERT:
@@ -141,6 +140,16 @@ public class AssessmentActivity extends AppCompatActivity {
                 break;
         }
         finish();
+    }
+
+    private AssessmentModel getAssessmentModel() {
+        return new AssessmentModel(courseId,
+                titleEditText.getText().toString().trim(),
+                dueDateEditText.getText().toString().trim(),
+                goalDateEditText.getText().toString().trim(),
+                objectiveRadioButton.isChecked() ? "o" : performanceRadioButton.isChecked() ? "p" : "",
+                noteEditText.getText().toString().trim()
+        );
     }
 
     private void deleteItem() {
@@ -185,6 +194,7 @@ public class AssessmentActivity extends AppCompatActivity {
         values.put(DBHelper.COLUMN_ASSESSMENT_DUE, assessment.getDueDate());
         values.put(DBHelper.COLUMN_ASSESSMENT_GOAL, assessment.getGoalDate());
         values.put(DBHelper.COLUMN_ASSESSMENT_TYPE, assessment.getType());
+        values.put(DBHelper.COLUMN_ASSESSMENT_NOTE, assessment.getNote());
         return values;
     }
 }
