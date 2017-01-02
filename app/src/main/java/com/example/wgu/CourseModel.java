@@ -8,13 +8,16 @@ public class CourseModel {
     private String startDate;
     private String endDate;
     private String status;
+    private String note;
 
-    public CourseModel(int termId, String title, String startDate, String endDate, String status) {
+
+    public CourseModel(int termId, String title, String startDate, String endDate, String status, String note) {
         this.termId = termId;
         this.title = title;
         this.startDate = startDate;
         this.endDate = endDate;
         this.status = status;
+        this.note = note;
     }
 
     public CourseModel(Cursor cursor) {
@@ -23,6 +26,7 @@ public class CourseModel {
         startDate = cursor.getString(cursor.getColumnIndex(DBHelper.COLUMN_COURSE_START));
         endDate = cursor.getString(cursor.getColumnIndex(DBHelper.COLUMN_COURSE_END));
         status = cursor.getString(cursor.getColumnIndex(DBHelper.COLUMN_COURSE_STATUS));
+        note = cursor.getString(cursor.getColumnIndex(DBHelper.COLUMN_COURSE_NOTE));
     }
 
     public String getTitle() {
@@ -49,26 +53,12 @@ public class CourseModel {
         this.endDate = endDate;
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        CourseModel course = (CourseModel) obj;
-        return course.getTitle().equals(title)
-                && course.getTermId() == termId
-                && course.getStartDate().equals(startDate)
-                && course.getEndDate().equals(endDate)
-                && course.getStatus().equals(status);
+    public String getNote() {
+        return note;
     }
 
-    public boolean isEmpty() {
-        return title.length() == 0
-                && startDate.length() == 0
-                && endDate.length() == 0;
+    public void setNote(String note) {
+        this.note = note;
     }
 
     public int getTermId() {
@@ -85,5 +75,30 @@ public class CourseModel {
 
     public void setStatus(String status) {
         this.status = (status == null) ? "" : status;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        CourseModel course = (CourseModel) obj;
+        return course.getTitle().equals(title)
+                && course.getTermId() == termId
+                && course.getStartDate().equals(startDate)
+                && course.getEndDate().equals(endDate)
+                && course.getStatus().equals(status)
+                && course.getNote().equals(note);
+    }
+
+    public boolean isEmpty() {
+        return title.length() == 0
+                && startDate.length() == 0
+                && endDate.length() == 0
+                && status.length() == 0
+                && note.length() == 0;
     }
 }

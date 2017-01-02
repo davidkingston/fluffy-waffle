@@ -27,6 +27,7 @@ public class CourseActivity extends AppCompatActivity {
     private EditText startDateEditText;
     private EditText endDateEditText;
     private Spinner statusSpinner;
+    private EditText noteEditText;
     private ArrayAdapter<CharSequence> statusSpinnerAdapter;
     private String itemFilter;
     private int currentRecordId;
@@ -125,6 +126,7 @@ public class CourseActivity extends AppCompatActivity {
         startDateEditText = (EditText) findViewById(R.id.courseStartEditText);
         endDateEditText = (EditText) findViewById(R.id.courseEndEditText);
         statusSpinner = (Spinner) findViewById(R.id.courseStatusSpinner);
+        noteEditText = (EditText) findViewById(R.id.courseNoteEditText);
 
         statusSpinnerAdapter = ArrayAdapter.createFromResource(
                 this,
@@ -147,6 +149,8 @@ public class CourseActivity extends AppCompatActivity {
         if (oldCourse.getStatus().length() != 0) {
             statusSpinner.setSelection(statusSpinnerAdapter.getPosition(oldCourse.getStatus()));
         }
+
+        noteEditText.setText(oldCourse.getNote());
     }
 
     private void finishEditing() {
@@ -179,7 +183,8 @@ public class CourseActivity extends AppCompatActivity {
                 titleEditText.getText().toString().trim(),
                 startDateEditText.getText().toString().trim(),
                 endDateEditText.getText().toString().trim(),
-                statusSpinner.getItemAtPosition(statusSpinner.getSelectedItemPosition()).toString()
+                statusSpinner.getItemAtPosition(statusSpinner.getSelectedItemPosition()).toString(),
+                noteEditText.getText().toString().trim()
         );
     }
 
@@ -235,6 +240,7 @@ public class CourseActivity extends AppCompatActivity {
         values.put(DBHelper.COLUMN_COURSE_START, course.getStartDate());
         values.put(DBHelper.COLUMN_COURSE_END, course.getEndDate());
         values.put(DBHelper.COLUMN_COURSE_STATUS, course.getStatus());
+        values.put(DBHelper.COLUMN_COURSE_NOTE, course.getNote());
         return values;
     }
 

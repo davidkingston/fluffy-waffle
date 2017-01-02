@@ -112,15 +112,34 @@
         android:layout_toEndOf="@+id/courseStatusTextView"
         android:layout_toRightOf="@+id/courseStatusTextView" />
 
+    <TextView
+        android:id="@+id/courseNoteTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/control_height_48"
+        android:layout_alignEnd="@+id/courseEndTextView"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignRight="@+id/courseEndTextView"
+        android:layout_below="@+id/courseStatusTextView"
+        android:gravity="end|center_vertical"
+        android:text="@string/courseNoteTextView_Text"
+        android:textSize="@dimen/text_size_18" />
+
+    <EditText
+        android:id="@+id/courseNoteEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/courseButtonLayout"
+        android:layout_below="@+id/courseNoteTextView"
+        android:inputType="textMultiLine"
+        android:gravity="top|left" />
+
     <LinearLayout
+        android:id="@+id/courseButtonLayout"
         style="?android:attr/buttonBarStyle"
         android:layout_width="match_parent"
         android:layout_height="@dimen/list_button_layout_height"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentStart="true"
         android:layout_centerHorizontal="true"
         android:gravity="center_horizontal"
         android:orientation="horizontal">
