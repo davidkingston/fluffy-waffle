@@ -1,15 +1,21 @@
 package com.example.wgu;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Toast;
@@ -17,6 +23,7 @@ import android.widget.Toast;
 public class AssessmentActivity extends AppCompatActivity {
 
     private static final int ASSESSMENTLIST_EDITOR_REQUEST_CODE = 1001;
+    private static final int CAMERA_REQUEST_CODE = 1003;
     private String action;
     private EditText titleEditText;
     private EditText dueDateEditText;
@@ -28,6 +35,8 @@ public class AssessmentActivity extends AppCompatActivity {
     private int currentRecordId;
     private int courseId;
     private AssessmentModel oldAssessment;
+    private int noteWidth;
+    private byte[] imageBytes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +69,8 @@ public class AssessmentActivity extends AppCompatActivity {
             courseId = oldAssessment.getCourseId();
 
             populateUIObjects();
+
+            populateTheNoteImage();
 
             titleEditText.requestFocus();
         }
@@ -94,6 +105,23 @@ public class AssessmentActivity extends AppCompatActivity {
         finishEditing();
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == CAMERA_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+            // get the Bitmap from the camera
+            Bitmap photoBitmap = (Bitmap) data.getExtras().get("data");
+            // add the Bitmap to the Note control
+            insertImageIntoEditText(photoBitmap);
+            // store the Bitmap
+            imageBytes = BitmapHelper.getBytesFromBitmap(photoBitmap);
+        }
+    }
+
+    public void assessmentCameraButton_onClick(View view) {
+        Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+        startActivityForResult(intent, CAMERA_REQUEST_CODE);
+    }
+
     private void initializeUIObjects() {
         titleEditText = (EditText) findViewById(R.id.assessmentTitleEditText);
         dueDateEditText = (EditText) findViewById(R.id.assessmentDueEditText);
@@ -115,6 +143,25 @@ public class AssessmentActivity extends AppCompatActivity {
         performanceRadioButton.setChecked(oldAssessment.getType().equals("p"));
 
         noteEditText.setText(oldAssessment.getNote());
+
+        if (oldAssessment.getImage() != null) {
+            imageBytes = oldAssessment.getImage();
+        }
+    }
+
+    private void populateTheNoteImage() {
+        // when the screen is initially rendering, the width of the EditText isn't available
+        // so set a listener on the preDraw event.
+        ViewTreeObserver noteViewTree = noteEditText.getViewTreeObserver();
+        noteViewTree.addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+            public boolean onPreDraw() {
+                noteWidth = noteEditText.getMeasuredWidth();
+                if (oldAssessment.getImage() != null) {
+                    insertImageIntoEditText(BitmapHelper.getBitMapFromBytes(oldAssessment.getImage()));
+                }
+                return true;
+            }
+        });
     }
 
     private void finishEditing() {
@@ -148,7 +195,8 @@ public class AssessmentActivity extends AppCompatActivity {
                 dueDateEditText.getText().toString().trim(),
                 goalDateEditText.getText().toString().trim(),
                 objectiveRadioButton.isChecked() ? "o" : performanceRadioButton.isChecked() ? "p" : "",
-                noteEditText.getText().toString().trim()
+                noteEditText.getText().toString().trim(),
+                imageBytes
         );
     }
 
@@ -195,6 +243,20 @@ public class AssessmentActivity extends AppCompatActivity {
         values.put(DBHelper.COLUMN_ASSESSMENT_GOAL, assessment.getGoalDate());
         values.put(DBHelper.COLUMN_ASSESSMENT_TYPE, assessment.getType());
         values.put(DBHelper.COLUMN_ASSESSMENT_NOTE, assessment.getNote());
+        values.put(DBHelper.COLUMN_ASSESSMENT_IMAGE, assessment.getImage());
         return values;
+    }
+
+    private void insertImageIntoEditText(Bitmap photoBitmap) {
+        // convert the Bitmap to a Drawable
+        Drawable photoDrawable = new BitmapDrawable(getResources(), photoBitmap);
+        // find the Note control
+        EditText et = (EditText) findViewById(R.id.assessmentNoteEditText);
+        // calculate the proper scale to make the image half the width of the note control
+        float scale = ((float) noteWidth / 2 / photoDrawable.getIntrinsicWidth());
+        // set the bounds of the Drawable
+        photoDrawable.setBounds(0, 0, (int) (scale * photoDrawable.getIntrinsicWidth()), (int) (scale * photoDrawable.getIntrinsicHeight()));
+        // add the image the the Note control
+        et.setCompoundDrawables(null, photoDrawable, null, null);
     }
 }
