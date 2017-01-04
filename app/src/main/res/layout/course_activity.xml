@@ -131,8 +131,19 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/courseButtonLayout"
         android:layout_below="@+id/courseNoteTextView"
-        android:inputType="textMultiLine"
-        android:gravity="top|left" />
+        android:gravity="top|start"
+        android:inputType="textMultiLine" />
+
+    <ImageButton
+        android:id="@+id/courseCameraButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/courseStatusSpinner"
+        android:contentDescription="@string/open_the_camera"
+        android:onClick="courseCameraButton_onClick"
+        android:src="@android:drawable/ic_menu_camera" />
 
     <LinearLayout
         android:id="@+id/courseButtonLayout"
@@ -149,7 +160,7 @@
             style="?android:attr/buttonBarButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="openAssessmentList"
+            android:onClick="assessmentListButton_onClick"
             android:text="@string/assessment_list_button_text"
             android:textSize="@dimen/list_button_text_size" />
 
@@ -158,11 +169,9 @@
             style="?android:attr/buttonBarButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="openMentorList"
+            android:onClick="mentorListButton_onClick"
             android:text="@string/mentor_list_button_text"
             android:textSize="@dimen/list_button_text_size" />
 
-
     </LinearLayout>
-
 </RelativeLayout>

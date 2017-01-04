@@ -72,6 +72,7 @@
     <string name="multiple_assessments_due">" assessments due."</string>
     <string name="courseNoteTextView_Text">Notes:</string>
     <string name="assessmentNoteTextView_Text">Notes:</string>
+    <string name="open_the_camera">Open the Camera</string>
     <string-array name="course_status">
         <item>Not Started</item>
         <item>In Progress</item>
