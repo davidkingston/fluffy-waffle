@@ -7,14 +7,14 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class DBHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "wgu.db";
-    private static final int DATABASE_VERSION = 3;
+    private static final int DATABASE_VERSION = 4;
 
-    public static final String TABLE_TERM = "Term";
-    public static final String COLUMN_TERM_ID = "_id";
-    public static final String COLUMN_TERM_TITLE = "Title";
-    public static final String COLUMN_TERM_START = "StartDate";
-    public static final String COLUMN_TERM_END = "EndDate";
-    public static final String[] ALL_TERM_COLUMNS = {COLUMN_TERM_ID, COLUMN_TERM_TITLE, COLUMN_TERM_START, COLUMN_TERM_END};
+    static final String TABLE_TERM = "Term";
+    static final String COLUMN_TERM_ID = "_id";
+    static final String COLUMN_TERM_TITLE = "Title";
+    static final String COLUMN_TERM_START = "StartDate";
+    static final String COLUMN_TERM_END = "EndDate";
+    static final String[] ALL_TERM_COLUMNS = {COLUMN_TERM_ID, COLUMN_TERM_TITLE, COLUMN_TERM_START, COLUMN_TERM_END};
     private static final String CREATE_TERM_TABLE =
             "CREATE TABLE " + TABLE_TERM + " (" +
                     COLUMN_TERM_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -23,15 +23,16 @@ public class DBHelper extends SQLiteOpenHelper {
                     COLUMN_TERM_END + " TEXT" +
                     ")";
 
-    public static final String TABLE_COURSE = "Course";
-    public static final String COLUMN_COURSE_ID = "_id";
-    public static final String COLUMN_COURSE_TERM_ID = "TermId";
-    public static final String COLUMN_COURSE_TITLE = "Title";
-    public static final String COLUMN_COURSE_START = "StartDate";
-    public static final String COLUMN_COURSE_END = "EndDate";
-    public static final String COLUMN_COURSE_STATUS = "Status";
-    public static final String COLUMN_COURSE_NOTE = "Note";
-    public static final String[] ALL_COURSE_COLUMNS = {COLUMN_COURSE_ID, COLUMN_COURSE_TERM_ID, COLUMN_COURSE_TITLE, COLUMN_COURSE_START, COLUMN_COURSE_END, COLUMN_COURSE_STATUS, COLUMN_COURSE_NOTE};
+    static final String TABLE_COURSE = "Course";
+    static final String COLUMN_COURSE_ID = "_id";
+    static final String COLUMN_COURSE_TERM_ID = "TermId";
+    static final String COLUMN_COURSE_TITLE = "Title";
+    static final String COLUMN_COURSE_START = "StartDate";
+    static final String COLUMN_COURSE_END = "EndDate";
+    static final String COLUMN_COURSE_STATUS = "Status";
+    static final String COLUMN_COURSE_NOTE = "Note";
+    static final String COLUMN_COURSE_IMAGE = "Image";
+    static final String[] ALL_COURSE_COLUMNS = {COLUMN_COURSE_ID, COLUMN_COURSE_TERM_ID, COLUMN_COURSE_TITLE, COLUMN_COURSE_START, COLUMN_COURSE_END, COLUMN_COURSE_STATUS, COLUMN_COURSE_NOTE, COLUMN_COURSE_IMAGE};
     private static final String CREATE_COURSE_TABLE =
             "CREATE TABLE " + TABLE_COURSE + " (" +
                     COLUMN_COURSE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -40,18 +41,20 @@ public class DBHelper extends SQLiteOpenHelper {
                     COLUMN_COURSE_START + " TEXT, " +
                     COLUMN_COURSE_END + " TEXT," +
                     COLUMN_COURSE_STATUS + " TEXT," +
-                    COLUMN_COURSE_NOTE + " TEXT" +
+                    COLUMN_COURSE_NOTE + " TEXT," +
+                    COLUMN_COURSE_IMAGE + " BLOB" +
                     ")";
 
-    public static final String TABLE_ASSESSMENT = "Assessment";
-    public static final String COLUMN_ASSESSMENT_ID = "_id";
-    public static final String COLUMN_ASSESSMENT_COURSE_ID = "CourseId";
-    public static final String COLUMN_ASSESSMENT_TITLE = "Title";
-    public static final String COLUMN_ASSESSMENT_DUE = "DueDate";
-    public static final String COLUMN_ASSESSMENT_GOAL = "GoalDate";
-    public static final String COLUMN_ASSESSMENT_TYPE = "Type";
-    public static final String COLUMN_ASSESSMENT_NOTE = "Note";
-    public static final String[] ALL_ASSESSMENT_COLUMNS = {COLUMN_ASSESSMENT_ID, COLUMN_ASSESSMENT_COURSE_ID, COLUMN_ASSESSMENT_TITLE, COLUMN_ASSESSMENT_DUE, COLUMN_ASSESSMENT_GOAL, COLUMN_ASSESSMENT_TYPE, COLUMN_ASSESSMENT_NOTE};
+    static final String TABLE_ASSESSMENT = "Assessment";
+    static final String COLUMN_ASSESSMENT_ID = "_id";
+    static final String COLUMN_ASSESSMENT_COURSE_ID = "CourseId";
+    static final String COLUMN_ASSESSMENT_TITLE = "Title";
+    static final String COLUMN_ASSESSMENT_DUE = "DueDate";
+    static final String COLUMN_ASSESSMENT_GOAL = "GoalDate";
+    static final String COLUMN_ASSESSMENT_TYPE = "Type";
+    static final String COLUMN_ASSESSMENT_NOTE = "Note";
+    static final String COLUMN_ASSESSMENT_IMAGE = "Image";
+    static final String[] ALL_ASSESSMENT_COLUMNS = {COLUMN_ASSESSMENT_ID, COLUMN_ASSESSMENT_COURSE_ID, COLUMN_ASSESSMENT_TITLE, COLUMN_ASSESSMENT_DUE, COLUMN_ASSESSMENT_GOAL, COLUMN_ASSESSMENT_TYPE, COLUMN_ASSESSMENT_NOTE, COLUMN_ASSESSMENT_IMAGE};
     private static final String CREATE_ASSESSMENT_TABLE =
             "CREATE TABLE " + TABLE_ASSESSMENT + " (" +
                     COLUMN_ASSESSMENT_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -60,16 +63,17 @@ public class DBHelper extends SQLiteOpenHelper {
                     COLUMN_ASSESSMENT_DUE + " TEXT, " +
                     COLUMN_ASSESSMENT_GOAL + " TEXT," +
                     COLUMN_ASSESSMENT_TYPE + " TEXT," +
-                    COLUMN_ASSESSMENT_NOTE + " TEXT" +
+                    COLUMN_ASSESSMENT_NOTE + " TEXT," +
+                    COLUMN_ASSESSMENT_IMAGE + " BLOB" +
                     ")";
 
-    public static final String TABLE_MENTOR = "Mentor";
-    public static final String COLUMN_MENTOR_ID = "_id";
-    public static final String COLUMN_MENTOR_COURSE_ID = "CourseId";
-    public static final String COLUMN_MENTOR_NAME = "Name";
-    public static final String COLUMN_MENTOR_EMAIL = "Email";
-    public static final String COLUMN_MENTOR_PHONE = "Phone";
-    public static final String[] ALL_MENTOR_COLUMNS = {COLUMN_MENTOR_ID, COLUMN_MENTOR_COURSE_ID, COLUMN_MENTOR_NAME, COLUMN_MENTOR_EMAIL, COLUMN_MENTOR_PHONE};
+    static final String TABLE_MENTOR = "Mentor";
+    static final String COLUMN_MENTOR_ID = "_id";
+    static final String COLUMN_MENTOR_COURSE_ID = "CourseId";
+    static final String COLUMN_MENTOR_NAME = "Name";
+    static final String COLUMN_MENTOR_EMAIL = "Email";
+    static final String COLUMN_MENTOR_PHONE = "Phone";
+    static final String[] ALL_MENTOR_COLUMNS = {COLUMN_MENTOR_ID, COLUMN_MENTOR_COURSE_ID, COLUMN_MENTOR_NAME, COLUMN_MENTOR_EMAIL, COLUMN_MENTOR_PHONE};
     private static final String CREATE_MENTOR_TABLE =
             "CREATE TABLE " + TABLE_MENTOR + " (" +
                     COLUMN_MENTOR_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
