@@ -144,6 +144,17 @@
         android:text="@string/assessmentNoteTextView_Text"
         android:textSize="@dimen/text_size_18" />
 
+    <ImageButton
+        android:id="@+id/assessmentCameraButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/assessmentTypeTextView"
+        android:contentDescription="@string/open_the_camera"
+        android:onClick="assessmentCameraButton_onClick"
+        android:src="@android:drawable/ic_menu_camera" />
+
     <EditText
         android:id="@+id/assessmentNoteEditText"
         android:layout_width="match_parent"
@@ -151,6 +162,6 @@
         android:layout_alignParentBottom="true"
         android:layout_below="@+id/assessmentNoteTextView"
         android:inputType="textMultiLine"
-        android:gravity="top|left" />
+        android:gravity="top|start" />
 
 </RelativeLayout>
