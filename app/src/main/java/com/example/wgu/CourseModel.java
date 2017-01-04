@@ -2,6 +2,8 @@ package com.example.wgu;
 
 import android.database.Cursor;
 
+import java.util.Arrays;
+
 public class CourseModel {
     private int termId;
     private String title;
@@ -102,7 +104,7 @@ public class CourseModel {
                 && course.getEndDate().equals(endDate)
                 && course.getStatus().equals(status)
                 && course.getNote().equals(note)
-                && (course.getImage() != null && course.getImage().equals(image));
+                && (course.getImage() != null && Arrays.equals(course.getImage(), image));
     }
 
     public boolean isEmpty() {
