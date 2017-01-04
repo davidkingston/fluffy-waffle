@@ -2,6 +2,8 @@ package com.example.wgu;
 
 import android.database.Cursor;
 
+import java.util.Arrays;
+
 public class AssessmentModel {
     private int courseId;
     private String title;
@@ -9,14 +11,16 @@ public class AssessmentModel {
     private String goalDate;
     private String type;
     private String note;
+    private byte[] image;
 
-    public AssessmentModel(int courseId, String title, String dueDate, String goalDate, String type, String note) {
+    public AssessmentModel(int courseId, String title, String dueDate, String goalDate, String type, String note, byte[] image) {
         this.courseId = courseId;
         this.title = title;
         this.dueDate = dueDate;
         this.goalDate = goalDate;
         this.type = type;
         this.note = note;
+        this.image = image;
     }
 
     public AssessmentModel(Cursor cursor) {
@@ -26,6 +30,7 @@ public class AssessmentModel {
         goalDate = cursor.getString(cursor.getColumnIndex(DBHelper.COLUMN_ASSESSMENT_GOAL));
         type = cursor.getString(cursor.getColumnIndex(DBHelper.COLUMN_ASSESSMENT_TYPE));
         note = cursor.getString(cursor.getColumnIndex(DBHelper.COLUMN_ASSESSMENT_NOTE));
+        image = cursor.getBlob(cursor.getColumnIndex(DBHelper.COLUMN_ASSESSMENT_IMAGE));
     }
 
     public String getTitle() {
@@ -76,6 +81,14 @@ public class AssessmentModel {
         this.type = (type == null) ? "" : type;
     }
 
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj)
@@ -90,7 +103,8 @@ public class AssessmentModel {
                 && assessment.getDueDate().equals(dueDate)
                 && assessment.getGoalDate().equals(goalDate)
                 && assessment.getType().equals(type)
-                && assessment.getNote().equals(note);
+                && assessment.getNote().equals(note)
+                && (assessment.getImage() != null && Arrays.equals(assessment.getImage(), image));
     }
 
     public boolean isEmpty() {
