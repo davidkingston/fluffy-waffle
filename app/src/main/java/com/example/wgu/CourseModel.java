@@ -9,15 +9,16 @@ public class CourseModel {
     private String endDate;
     private String status;
     private String note;
+    private byte[] image;
 
-
-    public CourseModel(int termId, String title, String startDate, String endDate, String status, String note) {
+    public CourseModel(int termId, String title, String startDate, String endDate, String status, String note, byte[] image) {
         this.termId = termId;
         this.title = title;
         this.startDate = startDate;
         this.endDate = endDate;
         this.status = status;
         this.note = note;
+        this.image = image;
     }
 
     public CourseModel(Cursor cursor) {
@@ -27,6 +28,7 @@ public class CourseModel {
         endDate = cursor.getString(cursor.getColumnIndex(DBHelper.COLUMN_COURSE_END));
         status = cursor.getString(cursor.getColumnIndex(DBHelper.COLUMN_COURSE_STATUS));
         note = cursor.getString(cursor.getColumnIndex(DBHelper.COLUMN_COURSE_NOTE));
+        image = cursor.getBlob(cursor.getColumnIndex(DBHelper.COLUMN_COURSE_IMAGE));
     }
 
     public String getTitle() {
@@ -77,6 +79,14 @@ public class CourseModel {
         this.status = (status == null) ? "" : status;
     }
 
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj)
@@ -91,7 +101,8 @@ public class CourseModel {
                 && course.getStartDate().equals(startDate)
                 && course.getEndDate().equals(endDate)
                 && course.getStatus().equals(status)
-                && course.getNote().equals(note);
+                && course.getNote().equals(note)
+                && (course.getImage() != null && course.getImage().equals(image));
     }
 
     public boolean isEmpty() {

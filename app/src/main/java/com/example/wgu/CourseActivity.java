@@ -1,11 +1,15 @@
 package com.example.wgu;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -13,6 +17,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -22,6 +27,7 @@ public class CourseActivity extends AppCompatActivity {
 
     private static final int ASSESSMENTLIST_EDITOR_REQUEST_CODE = 1001;
     private static final int MENTORLIST_EDITOR_REQUEST_CODE = 1002;
+    private static final int CAMERA_REQUEST_CODE = 1003;
     private String action;
     private EditText titleEditText;
     private EditText startDateEditText;
@@ -33,6 +39,8 @@ public class CourseActivity extends AppCompatActivity {
     private int currentRecordId;
     private int termId;
     private CourseModel oldCourse;
+    private int noteWidth;
+    private byte[] imageBytes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +64,11 @@ public class CourseActivity extends AppCompatActivity {
 
             initializeModel(uri);
 
+            termId = oldCourse.getTermId();
+
             populateUIObjects();
+
+            populateTheNoteImage();
 
             titleEditText.requestFocus();
         }
@@ -91,6 +103,80 @@ public class CourseActivity extends AppCompatActivity {
         finishEditing();
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == CAMERA_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+            // get the Bitmap from the camera
+            Bitmap photoBitmap = (Bitmap) data.getExtras().get("data");
+            // add the Bitmap to the Note control
+            insertImageIntoEditText(photoBitmap);
+            // store the Bitmap
+            imageBytes = BitmapHelper.getBytesFromBitmap(photoBitmap);
+        }
+    }
+
+    public void courseCameraButton_onClick(View view) {
+        Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+        startActivityForResult(intent, CAMERA_REQUEST_CODE);
+    }
+
+    public void assessmentListButton_onClick(View view) {
+        openChildList(CourseActivity.this,
+                AssessmentListActivity.class,
+                AssessmentProvider.CONTENT_URI,
+                AssessmentProvider.CONTENT_ITEM_TYPE,
+                ASSESSMENTLIST_EDITOR_REQUEST_CODE);
+    }
+
+    public void mentorListButton_onClick(View view) {
+        openChildList(CourseActivity.this,
+                MentorListActivity.class,
+                MentorProvider.CONTENT_URI,
+                MentorProvider.CONTENT_ITEM_TYPE,
+                MENTORLIST_EDITOR_REQUEST_CODE);
+    }
+
+    private void openChildList(Context context, Class targetClass, Uri targetUri, String targetItemType, int requestCode) {
+        CourseModel newCourse = getCourseModel();
+
+        if (newCourse.getTitle().length() == 0) {
+            titleEditText.setError("Title is required.");
+            return;
+        }
+        switch (action) {
+            case Intent.ACTION_INSERT:
+                currentRecordId = insertItem(newCourse);
+                initializeActivityPropertiesForEdit();
+                invalidateOptionsMenu();
+                break;
+            case Intent.ACTION_EDIT:
+                if (oldCourse != null && !oldCourse.equals(newCourse)) {
+                    updateItem(newCourse);
+                }
+                break;
+        }
+
+        Intent intent = new Intent(context, targetClass);
+        Uri uri = Uri.parse(targetUri + "/c/" + currentRecordId);
+        intent.putExtra(targetItemType, uri);
+        startActivityForResult(intent, requestCode);
+    }
+
+    private void populateTheNoteImage() {
+        // when the screen is initially rendering, the width of the EditText isn't available
+        // so set a listener on the preDraw event.
+        ViewTreeObserver noteViewTree = noteEditText.getViewTreeObserver();
+        noteViewTree.addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+            public boolean onPreDraw() {
+                noteWidth = noteEditText.getMeasuredWidth();
+                if (oldCourse.getImage() != null) {
+                    insertImageIntoEditText(BitmapHelper.getBitMapFromBytes(oldCourse.getImage()));
+                }
+                return true;
+            }
+        });
+    }
+
     private void initializeModel(Uri uri) {
         Cursor cursor = getContentResolver().query(uri, DBHelper.ALL_COURSE_COLUMNS,
                 itemFilter, null, null);
@@ -110,7 +196,6 @@ public class CourseActivity extends AppCompatActivity {
         String mentorFilter = DBHelper.COLUMN_MENTOR_COURSE_ID + " = " + currentRecordId;
         Cursor mentorCursor = getContentResolver().query(MentorProvider.CONTENT_URI, DBHelper.ALL_MENTOR_COLUMNS,
                 mentorFilter, null, null);
-
 
         return (mentorCursor.getCount() > 0);
     }
@@ -151,6 +236,10 @@ public class CourseActivity extends AppCompatActivity {
         }
 
         noteEditText.setText(oldCourse.getNote());
+
+        if (oldCourse.getImage() != null) {
+            imageBytes = oldCourse.getImage();
+        }
     }
 
     private void finishEditing() {
@@ -184,7 +273,8 @@ public class CourseActivity extends AppCompatActivity {
                 startDateEditText.getText().toString().trim(),
                 endDateEditText.getText().toString().trim(),
                 statusSpinner.getItemAtPosition(statusSpinner.getSelectedItemPosition()).toString(),
-                noteEditText.getText().toString().trim()
+                noteEditText.getText().toString().trim(),
+                imageBytes
         );
     }
 
@@ -241,49 +331,21 @@ public class CourseActivity extends AppCompatActivity {
         values.put(DBHelper.COLUMN_COURSE_END, course.getEndDate());
         values.put(DBHelper.COLUMN_COURSE_STATUS, course.getStatus());
         values.put(DBHelper.COLUMN_COURSE_NOTE, course.getNote());
+        values.put(DBHelper.COLUMN_COURSE_IMAGE, course.getImage());
         return values;
     }
 
-
-    public void openAssessmentList(View view) {
-        openChildList(CourseActivity.this,
-                AssessmentListActivity.class,
-                AssessmentProvider.CONTENT_URI,
-                AssessmentProvider.CONTENT_ITEM_TYPE,
-                ASSESSMENTLIST_EDITOR_REQUEST_CODE);
+    private void insertImageIntoEditText(Bitmap photoBitmap) {
+        // convert the Bitmap to a Drawable
+        Drawable photoDrawable = new BitmapDrawable(getResources(), photoBitmap);
+        // find the Note control
+        EditText et = (EditText) findViewById(R.id.courseNoteEditText);
+        // calculate the proper scale to make the image half the width of the note control
+        float scale = ((float) noteWidth / 2 / photoDrawable.getIntrinsicWidth());
+        // set the bounds of the Drawable
+        photoDrawable.setBounds(0, 0, (int) (scale * photoDrawable.getIntrinsicWidth()), (int) (scale * photoDrawable.getIntrinsicHeight()));
+        // add the image the the Note control
+        et.setCompoundDrawables(null, photoDrawable, null, null);
     }
 
-    public void openMentorList(View view) {
-        openChildList(CourseActivity.this,
-                MentorListActivity.class,
-                MentorProvider.CONTENT_URI,
-                MentorProvider.CONTENT_ITEM_TYPE,
-                MENTORLIST_EDITOR_REQUEST_CODE);
-    }
-
-    public void openChildList(Context context, Class targetClass, Uri targetUri, String targetItemType, int requestCode) {
-        CourseModel newCourse = getCourseModel();
-
-        if (newCourse.getTitle().length() == 0) {
-            titleEditText.setError("Title is required.");
-            return;
-        }
-        switch (action) {
-            case Intent.ACTION_INSERT:
-                currentRecordId = insertItem(newCourse);
-                initializeActivityPropertiesForEdit();
-                invalidateOptionsMenu();
-                break;
-            case Intent.ACTION_EDIT:
-                if (oldCourse != null && !oldCourse.equals(newCourse)) {
-                    updateItem(newCourse);
-                }
-                break;
-        }
-
-        Intent intent = new Intent(context, targetClass);
-        Uri uri = Uri.parse(targetUri + "/c/" + currentRecordId);
-        intent.putExtra(targetItemType, uri);
-        startActivityForResult(intent, requestCode);
-    }
 }
