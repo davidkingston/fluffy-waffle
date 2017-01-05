@@ -174,6 +174,16 @@ public class CourseActivity extends AppCompatActivity {
                 MENTORLIST_EDITOR_REQUEST_CODE);
     }
 
+    public void courseShareButton_onClick(View view) {
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("text/plain");
+        String subject = titleEditText.getText().toString().trim();
+        String body = titleEditText.getText().toString().trim() + ":\n" + noteEditText.getText().toString().trim();
+        intent.putExtra(android.content.Intent.EXTRA_SUBJECT, subject);
+        intent.putExtra(android.content.Intent.EXTRA_TEXT, body);
+        startActivity(Intent.createChooser(intent, "Share notes:"));
+    }
+
     private void openChildList(Context context, Class targetClass, Uri targetUri, String targetItemType, int requestCode) {
         CourseModel newCourse = getCourseModel();
 
@@ -387,5 +397,4 @@ public class CourseActivity extends AppCompatActivity {
         // add the image the the Note control
         et.setCompoundDrawables(null, photoDrawable, null, null);
     }
-
 }
