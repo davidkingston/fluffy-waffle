@@ -63,13 +63,10 @@
     <string name="term_list_button_text">Terms</string>
     <string name="dummy_text">Dummy Text</string>
     <string name="welcome_to_the_wgu_student_portal">Welcome to the WGU student portal.</string>
-    <string name="no_assessments_due">No assessments due.</string>
     <string name="configure_to_do">Configure To Do List</string>
     <string name="dialog_ok">OK</string>
     <string name="dialog_cancel">Cancel</string>
     <string name="to_do_window_id">to_do_window_id</string>
-    <string name="one_assessment_due">1 assessment due.</string>
-    <string name="multiple_assessments_due">" assessments due."</string>
     <string name="courseNoteTextView_Text">Notes:</string>
     <string name="assessmentNoteTextView_Text">Notes:</string>
     <string name="open_the_camera">Open the Camera</string>
