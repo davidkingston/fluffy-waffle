@@ -22,7 +22,6 @@ import android.widget.Toast;
 
 public class AssessmentActivity extends AppCompatActivity {
 
-    private static final int ASSESSMENTLIST_EDITOR_REQUEST_CODE = 1001;
     private static final int CAMERA_REQUEST_CODE = 1003;
     private String action;
     private EditText titleEditText;
