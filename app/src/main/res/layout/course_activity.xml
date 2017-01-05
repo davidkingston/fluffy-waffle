@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/courseActivity"
     android:layout_width="match_parent"
@@ -143,7 +144,8 @@
         android:layout_below="@+id/courseStatusSpinner"
         android:contentDescription="@string/open_the_camera"
         android:onClick="courseCameraButton_onClick"
-        android:src="@android:drawable/ic_menu_camera" />
+        android:background="?android:selectableItemBackground"
+        app:srcCompat="@drawable/ic_action_camera" />
 
     <LinearLayout
         android:id="@+id/courseButtonLayout"

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -151,9 +152,10 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/assessmentTypeTextView"
+        android:background="?android:selectableItemBackground"
         android:contentDescription="@string/open_the_camera"
         android:onClick="assessmentCameraButton_onClick"
-        android:src="@android:drawable/ic_menu_camera" />
+        app:srcCompat="@drawable/ic_action_camera" />
 
     <EditText
         android:id="@+id/assessmentNoteEditText"
@@ -161,7 +163,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_below="@+id/assessmentNoteTextView"
-        android:inputType="textMultiLine"
-        android:gravity="top|start" />
+        android:gravity="top|start"
+        android:inputType="textMultiLine" />
 
 </RelativeLayout>
