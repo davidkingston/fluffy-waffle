@@ -73,6 +73,24 @@ public class AssessmentActivity extends AppCompatActivity {
 
             titleEditText.requestFocus();
         }
+
+        // restore any saved data.  most likely from an orientation change.
+        if (savedInstanceState != null) {
+            titleEditText.setText(savedInstanceState.getString(DBHelper.COLUMN_ASSESSMENT_TITLE));
+            dueDateEditText.setText(savedInstanceState.getString(DBHelper.COLUMN_ASSESSMENT_DUE));
+            goalDateEditText.setText(savedInstanceState.getString(DBHelper.COLUMN_ASSESSMENT_GOAL));
+
+            objectiveRadioButton.setChecked(savedInstanceState.getString(DBHelper.COLUMN_ASSESSMENT_TYPE).equals("o"));
+            performanceRadioButton.setChecked(savedInstanceState.getString(DBHelper.COLUMN_ASSESSMENT_TYPE).equals("p"));
+
+            noteEditText.setText(savedInstanceState.getString(DBHelper.COLUMN_ASSESSMENT_NOTE));
+
+            if (savedInstanceState.getByteArray(DBHelper.COLUMN_ASSESSMENT_IMAGE) != null) {
+                imageBytes = savedInstanceState.getByteArray(DBHelper.COLUMN_ASSESSMENT_IMAGE);
+            }
+
+            populateTheNoteImage();
+        }
     }
 
     @Override
@@ -102,6 +120,21 @@ public class AssessmentActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         finishEditing();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        // persist the current data across orientation changes.
+        outState.putInt(DBHelper.COLUMN_ASSESSMENT_ID, currentRecordId);
+        outState.putInt(DBHelper.COLUMN_ASSESSMENT_COURSE_ID, courseId);
+        outState.putString(DBHelper.COLUMN_ASSESSMENT_TITLE, titleEditText.getText().toString().trim());
+        outState.putString(DBHelper.COLUMN_ASSESSMENT_DUE, dueDateEditText.getText().toString().trim());
+        outState.putString(DBHelper.COLUMN_ASSESSMENT_GOAL, goalDateEditText.getText().toString().trim());
+        outState.putString(DBHelper.COLUMN_ASSESSMENT_TYPE, objectiveRadioButton.isChecked() ? "o" : performanceRadioButton.isChecked() ? "p" : "");
+        outState.putString(DBHelper.COLUMN_ASSESSMENT_NOTE, noteEditText.getText().toString().trim());
+        outState.putByteArray(DBHelper.COLUMN_ASSESSMENT_IMAGE, imageBytes);
     }
 
     @Override
@@ -155,8 +188,8 @@ public class AssessmentActivity extends AppCompatActivity {
         noteViewTree.addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
             public boolean onPreDraw() {
                 noteWidth = noteEditText.getMeasuredWidth();
-                if (oldAssessment.getImage() != null) {
-                    insertImageIntoEditText(BitmapHelper.getBitMapFromBytes(oldAssessment.getImage()));
+                if (imageBytes != null) {
+                    insertImageIntoEditText(BitmapHelper.getBitMapFromBytes(imageBytes));
                 }
                 return true;
             }
