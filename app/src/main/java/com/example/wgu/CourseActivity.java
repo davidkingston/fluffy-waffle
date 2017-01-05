@@ -142,6 +142,10 @@ public class CourseActivity extends AppCompatActivity {
         if (requestCode == CAMERA_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
             // get the Bitmap from the camera
             Bitmap photoBitmap = (Bitmap) data.getExtras().get("data");
+            // ensure the noteWidth is set
+            if (noteWidth == 0) {
+                noteWidth = noteEditText.getMeasuredWidth();
+            }
             // add the Bitmap to the Note control
             insertImageIntoEditText(photoBitmap);
             // store the Bitmap
@@ -202,9 +206,11 @@ public class CourseActivity extends AppCompatActivity {
         ViewTreeObserver noteViewTree = noteEditText.getViewTreeObserver();
         noteViewTree.addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
             public boolean onPreDraw() {
-                noteWidth = noteEditText.getMeasuredWidth();
-                if (imageBytes != null) {
-                    insertImageIntoEditText(BitmapHelper.getBitMapFromBytes(imageBytes));
+                if (noteWidth == 0) {
+                    noteWidth = noteEditText.getMeasuredWidth();
+                    if (imageBytes != null) {
+                        insertImageIntoEditText(BitmapHelper.getBitMapFromBytes(imageBytes));
+                    }
                 }
                 return true;
             }
