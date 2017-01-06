@@ -52,7 +52,6 @@ public class MainActivity extends AppCompatActivity
         SharedPreferences settings = getSharedPreferences("settings", 0);
         toDoWindowId = settings.getInt(getString(R.string.to_do_window_id), 0);
 
-
         initializeAssessmentList();
         initializeCourseStartingList();
         initializeCourseEndingList();
