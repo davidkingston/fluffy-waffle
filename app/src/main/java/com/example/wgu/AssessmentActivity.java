@@ -96,7 +96,7 @@ public class AssessmentActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         if (action.equals(Intent.ACTION_EDIT)) {
-            getMenuInflater().inflate(R.menu.menu_delete, menu);
+            getMenuInflater().inflate(R.menu.menu_assessment, menu);
         }
         return true;
     }
@@ -111,6 +111,9 @@ public class AssessmentActivity extends AppCompatActivity {
                 break;
             case R.id.action_delete_term:
                 deleteItem();
+                break;
+            case R.id.action_share_assessment:
+                shareAssessment();
                 break;
         }
 
@@ -156,6 +159,20 @@ public class AssessmentActivity extends AppCompatActivity {
     public void assessmentCameraButton_onClick(View view) {
         Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
         startActivityForResult(intent, CAMERA_REQUEST_CODE);
+    }
+
+    private void shareAssessment() {
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("text/plain");
+        String subject = titleEditText.getText().toString().trim();
+        String body = "Title: " + titleEditText.getText().toString().trim() + "\n" +
+                "Due Date: " + dueDateEditText.getText().toString().trim() + "\n" +
+                "Goal Date: " + goalDateEditText.getText().toString().trim() + "\n" +
+                "Type: " + (objectiveRadioButton.isChecked() ? "Objective" : performanceRadioButton.isChecked() ? "Performance" : "") + "\n" +
+                "Note: " + noteEditText.getText().toString().trim();
+        intent.putExtra(android.content.Intent.EXTRA_SUBJECT, subject);
+        intent.putExtra(android.content.Intent.EXTRA_TEXT, body);
+        startActivity(Intent.createChooser(intent, "Share Assessment:"));
     }
 
     private void initializeUIObjects() {
