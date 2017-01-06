@@ -71,13 +71,6 @@
     <string name="assessmentNoteTextView_Text">Notes:</string>
     <string name="open_the_camera">Open the Camera</string>
     <string name="share">Share</string>
-    <string-array name="course_status">
-        <item>Not Started</item>
-        <item>In Progress</item>
-        <item>Completed</item>
-        <item>Dropped</item>
-        <item>Failed</item>
-    </string-array>
     <string-array name="to_do_window">
         <item>Today</item>
         <item>3 Days</item>

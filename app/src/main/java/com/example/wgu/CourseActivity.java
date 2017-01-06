@@ -23,6 +23,8 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 public class CourseActivity extends AppCompatActivity {
 
     private static final int ASSESSMENTLIST_EDITOR_REQUEST_CODE = 1001;
@@ -34,7 +36,7 @@ public class CourseActivity extends AppCompatActivity {
     private EditText endDateEditText;
     private Spinner statusSpinner;
     private EditText noteEditText;
-    private ArrayAdapter<CharSequence> statusSpinnerAdapter;
+    private ArrayAdapter<String> statusSpinnerAdapter;
     private String itemFilter;
     private int currentRecordId;
     private int termId;
@@ -263,12 +265,18 @@ public class CourseActivity extends AppCompatActivity {
         statusSpinner = (Spinner) findViewById(R.id.courseStatusSpinner);
         noteEditText = (EditText) findViewById(R.id.courseNoteEditText);
 
-        statusSpinnerAdapter = ArrayAdapter.createFromResource(
+        ArrayList<String> statuses = new ArrayList<>();
+        statuses.add("Not Started");
+        statuses.add("In Progress");
+        statuses.add("Completed");
+        statuses.add("Dropped");
+        statuses.add("Failed");
+
+        statusSpinnerAdapter = new ArrayAdapter<>(
                 this,
-                R.array.course_status,
-                android.R.layout.simple_spinner_item
+                android.R.layout.simple_spinner_dropdown_item,
+                statuses
         );
-        statusSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         statusSpinner.setAdapter(statusSpinnerAdapter);
 
