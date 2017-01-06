@@ -9,7 +9,7 @@
         android:title="@string/share"
         app:showAsAction="ifRoom" />
     <item
-        android:id="@+id/action_delete_term"
+        android:id="@+id/action_delete_assessment"
         android:icon="@drawable/ic_action_delete"
         android:orderInCategory="200"
         android:title="@string/action_delete"

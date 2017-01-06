@@ -109,7 +109,7 @@ public class CourseActivity extends AppCompatActivity {
             case android.R.id.home:
                 finishEditing();
                 break;
-            case R.id.action_delete_term:
+            case R.id.action_delete_record:
                 deleteItem();
                 break;
         }

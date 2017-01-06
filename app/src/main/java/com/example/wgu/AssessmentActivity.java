@@ -109,7 +109,7 @@ public class AssessmentActivity extends AppCompatActivity {
             case android.R.id.home:
                 finishEditing();
                 break;
-            case R.id.action_delete_term:
+            case R.id.action_delete_assessment:
                 deleteItem();
                 break;
             case R.id.action_share_assessment:
